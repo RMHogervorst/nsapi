@@ -1,0 +1,11 @@
+Package: nsapi
+Version: 0.0.0.9000
+Title: Connect to the NS (Dutch Railways) api
+Description: Something
+Authors@R: person("Roel M.", "Hogervorst", email ="hogervorst.rm@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0001-7509-0328"))
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+URL: https://github.com/rmhogervorst/
+BugReports: https://github.com/rmhogervorst/
