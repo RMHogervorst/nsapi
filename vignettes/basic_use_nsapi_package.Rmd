@@ -1,0 +1,101 @@
+---
+title: "Basic use of the nsapi package"
+author: "Roel M. Hogervorst"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic use of the nsapi package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(nsapi)
+```
+
+
+This is a description and use of all the functions in the package.
+
+The API returns everything in Dutch and therefore I have kept the responses in Dutch as well.
+
+# Authentification
+Before you can use any of the functions you need a username and password
+To get that go to: <https://www.ns.nl/ews-aanvraagformulier/>
+
+You will recieve a confirmation email, and finally a username and password (that can't be changed for some reason).
+
+You need to add the username and password to your rsession for the nsapi package to work.
+Why? Good question! It is not smart to type your passwords in a R session, they will end up in your history file and will be available for everyone who searches your computer. 
+You might think that this password and account is not that important and you might be right, but let's do the right thing anyway.
+
+## Temporary adding acountname and password to your session
+A temporary way is to add them to your session with :
+
+```{r, eval=FALSE}
+Sys.setenv(NSAPIACCOUNT = "probablyyouremail@email.com")
+Sys.setenv(NSAPIPW = "yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod")
+```
+
+At the end of your session (if you go to a new project, if you restart R or if you crash) the keys are removed from memory. Keep in mind that this DOES put your password in the history file and is therefore NOT recommended. 
+
+## Permanently adding username and password to your r session
+
+Go to your global .Renviron file (or make one) and add the keys
+```{r, eval=FALSE}
+file.edit("~./.Renviron")
+```
+
+The file will open and you can add two entries:
+
+```
+NSAPIPW = yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod
+NSAPIACCOUNT = probablyyouremail@email.com
+```
+
+
+# Getting travel advise
+
+If you'd like to know when your
+
+```{r}
+library(nsapi)
+ams_to_groningen <- travel_advise(
+  fromStation = "Amsterdam Centraal",
+  toStation = "Groningen",
+  #dateTime = , # I don't use it 
+  departure = TRUE  # I want to depart now
+)
+ams_to_groningen[,1:5]
+```
+
+The function returns a data.frame with 4 advises before and 4 after the time you selected.
+
+```{r}
+ams_to_groningen[,6:8]
+```
+
+The column Reisdeel is a nested dataframe with a nested dataframe called stops within. 
+
+```{r}
+str(ams_to_groningen[1,13])
+```
+ The api returns a lot of nested information, and as a consequence the data.frame is nested too.
+
+Every row is thus an advise with arrival and departure times and travelparts,
+if you have to switch trains there will be more than 1 row in the ReisDeel column.
+For instance in the first row:
+
+```{r}
+tibble::as_tibble(ams_to_groningen$ReisDeel[[1]])
+```
+
+And every part of the trip has stops where the train stops:
+
+```{r}
+tibble::as_tibble(ams_to_groningen$ReisDeel[[1]]$Stops[[2]])
+```
+

@@ -7,5 +7,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-URL: https://github.com/rmhogervorst/
-BugReports: https://github.com/rmhogervorst/
+URL: https://github.com/RMHogervorst/nsapi
+BugReports: https://github.com/RMHogervorst/nsapi/issues
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+Imports: 
+    crul,
+    xml2
+VignetteBuilder: knitr

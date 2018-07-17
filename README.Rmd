@@ -1,0 +1,66 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# nsapi
+The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an API where we can
+query for travel advise, see the current trains on a given station, see if there is any delays or work on the tracks and NS also provides a list with geolocation of all the stations. 
+
+The goal of nsapi is to make it easy to gather data from the NS api. The package strives to return data.frames
+
+## Installation
+
+You can NOT YET install the released version of nsapi from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("nsapi")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("RMHogervorst/nsapi")
+```
+## Example
+
+This is a basic example which shows you how you get travelinformation:
+
+```{r}
+library(nsapi)
+```
+
+```{r example}
+treinplanner <- travel_advise(
+  fromStation = "Leiden Centraal", 
+  toStation = "Utrecht Centraal",
+  departure = TRUE,
+  yearCard = TRUE,
+  previousAdvices = 1, 
+  nextAdvices = 1)
+treinplanner
+```
+
+
+
+
+
+## Metadata
+The package is MIT licensed although the information from NS is probably propriatary.
+
+```{r, eval=FALSE}
+codecoverage <- covr::package_coverage(path = ".",type = "tests")
+print(codecoverage)
+```
+
