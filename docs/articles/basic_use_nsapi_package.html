@@ -82,7 +82,7 @@
       <h1>Basic use of the nsapi package</h1>
                         <h4 class="author">Roel M. Hogervorst</h4>
             
-            <h4 class="date">2018-07-17</h4>
+            <h4 class="date">2018-07-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/RMHogervorst/nsapi/blob/master/vignettes/basic_use_nsapi_package.Rmd"><code>vignettes/basic_use_nsapi_package.Rmd</code></a></small>
       <div class="hidden name"><code>basic_use_nsapi_package.Rmd</code></div>
@@ -130,7 +130,7 @@ ams_to_groningen &lt;-<span class="st"> </span><span class="kw"><a href="../refe
 )
 ams_to_groningen[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
 <span class="co">#&gt;   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span>
-<span class="co">#&gt; 1      NA                 1             2:06            2:06</span>
+<span class="co">#&gt; 1      NA                 1             2:06            2:08</span>
 <span class="co">#&gt; 2      NA                 2             2:06            2:06</span>
 <span class="co">#&gt; 3      NA                 1             2:06            2:06</span>
 <span class="co">#&gt; 4      NA                 2             2:06            2:06</span>
@@ -152,53 +152,266 @@ ams_to_groningen[,<span class="dv">1</span><span class="op">:</span><span class=
 <p>The function returns a data.frame with 4 advises before and 4 after the time you selected.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen[,<span class="dv">6</span><span class="op">:</span><span class="dv">8</span>]
 <span class="co">#&gt;   AankomstVertraging Optimaal GeplandeVertrekTijd</span>
-<span class="co">#&gt; 1               &lt;NA&gt;    FALSE 2018-07-17 17:07:00</span>
-<span class="co">#&gt; 2               &lt;NA&gt;    FALSE 2018-07-17 17:37:00</span>
-<span class="co">#&gt; 3               &lt;NA&gt;    FALSE 2018-07-17 18:07:00</span>
-<span class="co">#&gt; 4               &lt;NA&gt;    FALSE 2018-07-17 18:37:00</span>
-<span class="co">#&gt; 5               &lt;NA&gt;     TRUE 2018-07-17 19:07:00</span>
-<span class="co">#&gt; 6               &lt;NA&gt;    FALSE 2018-07-17 19:23:00</span>
-<span class="co">#&gt; 7               &lt;NA&gt;    FALSE 2018-07-17 19:37:00</span>
-<span class="co">#&gt; 8               &lt;NA&gt;    FALSE 2018-07-17 20:07:00</span>
-<span class="co">#&gt; 9               &lt;NA&gt;    FALSE 2018-07-17 20:23:00</span></code></pre></div>
+<span class="co">#&gt; 1             +2 min    FALSE 2018-07-18 13:07:00</span>
+<span class="co">#&gt; 2               &lt;NA&gt;    FALSE 2018-07-18 13:37:00</span>
+<span class="co">#&gt; 3               &lt;NA&gt;    FALSE 2018-07-18 14:07:00</span>
+<span class="co">#&gt; 4               &lt;NA&gt;    FALSE 2018-07-18 14:37:00</span>
+<span class="co">#&gt; 5               &lt;NA&gt;     TRUE 2018-07-18 15:07:00</span>
+<span class="co">#&gt; 6               &lt;NA&gt;    FALSE 2018-07-18 15:23:00</span>
+<span class="co">#&gt; 7               &lt;NA&gt;    FALSE 2018-07-18 15:37:00</span>
+<span class="co">#&gt; 8               &lt;NA&gt;    FALSE 2018-07-18 16:07:00</span>
+<span class="co">#&gt; 9               &lt;NA&gt;    FALSE 2018-07-18 16:23:00</span></code></pre></div>
 <p>The column Reisdeel is a nested dataframe with a nested dataframe called stops within.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(ams_to_groningen[<span class="dv">1</span>,<span class="dv">13</span>])
 <span class="co">#&gt; List of 1</span>
 <span class="co">#&gt;  $ :'data.frame':    2 obs. of  5 variables:</span>
 <span class="co">#&gt;   ..$ Vervoerder : chr [1:2] "NS" "NS"</span>
 <span class="co">#&gt;   ..$ VervoerType: chr [1:2] "Intercity" "Intercity"</span>
-<span class="co">#&gt;   ..$ RitNummer  : chr [1:2] "2661" "761"</span>
-<span class="co">#&gt;   ..$ Status     : chr [1:2] "VOLGENS-PLAN" "VOLGENS-PLAN"</span>
+<span class="co">#&gt;   ..$ RitNummer  : chr [1:2] "2645" "745"</span>
+<span class="co">#&gt;   ..$ Status     : chr [1:2] "VOLGENS-PLAN" "VERTRAAGD"</span>
 <span class="co">#&gt;   ..$ Stops      :List of 2</span>
 <span class="co">#&gt;   .. ..$ :'data.frame':  2 obs. of  4 variables:</span>
 <span class="co">#&gt;   .. .. ..$ Naam          : chr [1:2] "Amsterdam Centraal" "Almere Centrum"</span>
-<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:2], format: "2018-07-17 17:07:00" ...</span>
+<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:2], format: "2018-07-18 13:07:00" ...</span>
 <span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:2] "11b" "3"</span>
 <span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:2] NA NA</span>
 <span class="co">#&gt;   .. ..$ :'data.frame':  5 obs. of  4 variables:</span>
 <span class="co">#&gt;   .. .. ..$ Naam          : chr [1:5] "Almere Centrum" "Lelystad Centrum" "Zwolle" "Assen" ...</span>
-<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:5], format: "2018-07-17 17:33:00" ...</span>
+<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:5], format: "2018-07-18 13:33:00" ...</span>
 <span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:5] "4" NA NA NA ...</span>
 <span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:5] NA NA NA NA ...</span>
 <span class="co">#&gt;  - attr(*, "class")= chr "AsIs"</span></code></pre></div>
 <p>The api returns a lot of nested information, and as a consequence the data.frame is nested too.</p>
 <p>Every row is thus an advise with arrival and departure times and travelparts, if you have to switch trains there will be more than 1 row in the ReisDeel column. For instance in the first row:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as_tibble</a></span>(ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]])
-<span class="co">#&gt; # A tibble: 2 x 5</span>
-<span class="co">#&gt;   Vervoerder VervoerType RitNummer Status       Stops               </span>
-<span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;        &lt;list&gt;              </span>
-<span class="co">#&gt; 1 NS         Intercity   2661      VOLGENS-PLAN &lt;data.frame [2 × 4]&gt;</span>
-<span class="co">#&gt; 2 NS         Intercity   761       VOLGENS-PLAN &lt;data.frame [5 × 4]&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]
+<span class="co">#&gt;   Vervoerder VervoerType RitNummer       Status</span>
+<span class="co">#&gt; 1         NS   Intercity      2645 VOLGENS-PLAN</span>
+<span class="co">#&gt; 2         NS   Intercity       745    VERTRAAGD</span>
+<span class="co">#&gt;                                                                                                                                                           Stops</span>
+<span class="co">#&gt; 1                                                                                    Amsterdam Centraal, Almere Centrum, 1531912020, 1531913280, 11b, 3, NA, NA</span>
+<span class="co">#&gt; 2 Almere Centrum, Lelystad Centrum, Zwolle, Assen, Groningen, 1531913580, 1531914420, 1531916100, 1531918560, 1531919580, 4, NA, NA, NA, 4b, NA, NA, NA, NA, NA</span></code></pre></div>
 <p>And every part of the trip has stops where the train stops:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as_tibble</a></span>(ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]<span class="op">$</span>Stops[[<span class="dv">2</span>]])
-<span class="co">#&gt; # A tibble: 5 x 4</span>
-<span class="co">#&gt;   Naam             Tijd                Spoor SpoorWijziging</span>
-<span class="co">#&gt;   &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;         </span>
-<span class="co">#&gt; 1 Almere Centrum   2018-07-17 17:33:00 4     &lt;NA&gt;          </span>
-<span class="co">#&gt; 2 Lelystad Centrum 2018-07-17 17:47:00 &lt;NA&gt;  &lt;NA&gt;          </span>
-<span class="co">#&gt; 3 Zwolle           2018-07-17 18:15:00 &lt;NA&gt;  &lt;NA&gt;          </span>
-<span class="co">#&gt; 4 Assen            2018-07-17 18:56:00 &lt;NA&gt;  &lt;NA&gt;          </span>
-<span class="co">#&gt; 5 Groningen        2018-07-17 19:13:00 4b    &lt;NA&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]<span class="op">$</span>Stops[[<span class="dv">2</span>]]
+<span class="co">#&gt;               Naam                Tijd Spoor SpoorWijziging</span>
+<span class="co">#&gt; 1   Almere Centrum 2018-07-18 13:33:00     4           &lt;NA&gt;</span>
+<span class="co">#&gt; 2 Lelystad Centrum 2018-07-18 13:47:00  &lt;NA&gt;           &lt;NA&gt;</span>
+<span class="co">#&gt; 3           Zwolle 2018-07-18 14:15:00  &lt;NA&gt;           &lt;NA&gt;</span>
+<span class="co">#&gt; 4            Assen 2018-07-18 14:56:00  &lt;NA&gt;           &lt;NA&gt;</span>
+<span class="co">#&gt; 5        Groningen 2018-07-18 15:13:00    4b           &lt;NA&gt;</span></code></pre></div>
+</div>
+<div id="stationlist" class="section level1">
+<h1 class="hasAnchor">
+<a href="#stationlist" class="anchor"></a>Stationlist</h1>
+<p>Another endpoint of the API is a list of stations</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stationlist.html">stationlist</a></span>()
+<span class="kw">head</span>(stations)
+<span class="co">#&gt;   Code                      Type        Namen Land UICCode      Lat</span>
+<span class="co">#&gt; 1   HT knooppuntIntercitystation list("De....   NL 8400319 51.69048</span>
+<span class="co">#&gt; 2  HTO          stoptreinstation list("Dn....   NL 8400320 51.70055</span>
+<span class="co">#&gt; 3  HDE          stoptreinstation list("'t....   NL 8400388 52.40917</span>
+<span class="co">#&gt; 4 AHBF knooppuntIntercitystation list("Aa....    D 8015345 50.76780</span>
+<span class="co">#&gt; 5  ATN          stoptreinstation list("Aa....   NL 8400045 51.92133</span>
+<span class="co">#&gt; 6   AC          stoptreinstation list("Ab....   NL 8400047 52.27850</span>
+<span class="co">#&gt;        Lon   Synoniemen</span>
+<span class="co">#&gt; 1 5.293620 list("He....</span>
+<span class="co">#&gt; 2 5.318333 list("He....</span>
+<span class="co">#&gt; 3 5.893611 list("Ha....</span>
+<span class="co">#&gt; 4 6.091499           NA</span>
+<span class="co">#&gt; 5 6.578627           NA</span>
+<span class="co">#&gt; 6 4.977000           NA</span>
+<span class="kw">names</span>(stations)
+<span class="co">#&gt; [1] "Code"       "Type"       "Namen"      "Land"       "UICCode"   </span>
+<span class="co">#&gt; [6] "Lat"        "Lon"        "Synoniemen"</span></code></pre></div>
+<p>This wil return a dataframe with all the stations in the NS api. There are not only Dutch stations, but also multiple Belgian, German, English, Austrian, French,Polish and other country stations. Every station has an international code, name, synonyms, geolocation (lat, lon), and type of station.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># code is not executed, I don't want to add these dependencies to the package</span>
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(ggrepel)
+stations &lt;-<span class="st"> </span>
+<span class="st">  </span>stations <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Naam =</span> <span class="kw">map_chr</span>(Namen, <span class="op">~</span>.[[<span class="st">"Kort"</span>]][[<span class="dv">1</span>]]),
+  <span class="dt">Label =</span> <span class="kw">ifelse</span>(Type <span class="op">==</span><span class="st"> "knooppuntIntercitystation"</span>, Naam,<span class="ot">NA</span>) ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.tibble</span>() 
+
+stations <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(Land <span class="op">==</span><span class="st"> "NL"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Lon, Lat, <span class="dt">label =</span> Label))<span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_map</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">title =</span> <span class="st">"Only Dutch Stations"</span>,
+    <span class="dt">subtitle =</span> <span class="st">"Major stations named"</span>,
+    <span class="dt">caption =</span> <span class="st">"Data: NS 2018 (Dutch National Railways)"</span>
+  )</code></pre></div>
+<div class="figure">
+<img src="../man/figures/Dutch_stations.png" alt="Plot of Dutch stations’ locations"><p class="caption">Plot of Dutch stations’ locations</p>
+</div>
+</div>
+<div id="departures" class="section level1">
+<h1 class="hasAnchor">
+<a href="#departures" class="anchor"></a>Departures</h1>
+<p>You can see the departure times of any station at this time by calling the <code><a href="../reference/departures.html">departures()</a></code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">leiden_trains &lt;-<span class="st"> </span><span class="kw"><a href="../reference/departures.html">departures</a></span>(<span class="dt">station =</span> <span class="st">"Leiden Lammenschans"</span>)
+<span class="kw">head</span>(leiden_trains)
+<span class="co">#&gt;   RitNummer         VertrekTijd   EindBestemming TreinSoort</span>
+<span class="co">#&gt; 1           2018-07-18 15:12:00  Alphen a/d Rijn   Sprinter</span>
+<span class="co">#&gt; 2           2018-07-18 15:17:00  Leiden Centraal   Sprinter</span>
+<span class="co">#&gt; 3           2018-07-18 15:27:00 Utrecht Centraal  Intercity</span>
+<span class="co">#&gt; 4           2018-07-18 15:32:00  Leiden Centraal  Intercity</span>
+<span class="co">#&gt; 5           2018-07-18 15:42:00  Alphen a/d Rijn   Sprinter</span>
+<span class="co">#&gt; 6           2018-07-18 15:47:00  Leiden Centraal   Sprinter</span>
+<span class="co">#&gt;        RouteTekst Vervoerder VertrekSpoor Spoorwijziging</span>
+<span class="co">#&gt; 1            &lt;NA&gt;                       1               </span>
+<span class="co">#&gt; 2            &lt;NA&gt;                       1               </span>
+<span class="co">#&gt; 3 Alphen a/d Rijn                       1               </span>
+<span class="co">#&gt; 4            &lt;NA&gt;                       1               </span>
+<span class="co">#&gt; 5            &lt;NA&gt;                       1               </span>
+<span class="co">#&gt; 6            &lt;NA&gt;                       1</span></code></pre></div>
+</div>
+<div id="disruptions-and-maintenance" class="section level1">
+<h1 class="hasAnchor">
+<a href="#disruptions-and-maintenance" class="anchor"></a>disruptions and maintenance</h1>
+<p>Can be called without arguments and with</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/disruptions_and_maintenance.html">disruptions_and_maintenance</a></span>()
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_STATW_rsd_esn_26mei_26jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICBER_asd_berlin_9_22jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ehv_rm_16_24jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICE_asd_basels_18_29jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ah_em_18_29jul"</span>
+<span class="co">#&gt;                               id</span>
+<span class="co">#&gt; 1 2018_STATW_rsd_esn_26mei_26jul</span>
+<span class="co">#&gt; 2  2018_ICBER_asd_berlin_9_22jul</span>
+<span class="co">#&gt; 3           2018_ehv_rm_16_24jul</span>
+<span class="co">#&gt; 4   2018_ICE_asd_basels_18_29jul</span>
+<span class="co">#&gt; 5            2018_ah_em_18_29jul</span>
+<span class="co">#&gt; 6                    prio-105154</span>
+<span class="co">#&gt;                                            Traject</span>
+<span class="co">#&gt; 1                    Roosendaal-Antwerpen C.-Puurs</span>
+<span class="co">#&gt; 2       Amsterdam C-Hannover Hbf-Berlin Ostbahnhof</span>
+<span class="co">#&gt; 3                               Eindhoven-Roermond</span>
+<span class="co">#&gt; 4 Amsterdam C-Köln Hbf-Frankfurt (M) Hbf/Basel SBB</span>
+<span class="co">#&gt; 5                   Arnhem Centraal-Düsseldorf Hbf</span>
+<span class="co">#&gt; 6                                        Hilversum</span>
+<span class="co">#&gt;                                 Periode Reden</span>
+<span class="co">#&gt; 1                vanaf zaterdag 26 mei       </span>
+<span class="co">#&gt; 2   maandag 9 tot en met zondag 22 juli      </span>
+<span class="co">#&gt; 3 maandag 16 tot en met dinsdag 24 juli      </span>
+<span class="co">#&gt; 4 woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 5 woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 6                                  &lt;NA&gt;      </span>
+<span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Bericht</span>
+<span class="co">#&gt; 1                                                                                                                                                                                     &lt;p&gt;\n&lt;b&gt;Wanneer: vanaf zaterdag 26 mei &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: aangepaste dienstregeling&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n&lt;br/&gt; plan uw reis in de Internationale Reisplanner\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 2             &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 9 tot en met zondag 22 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;9 tot en met 22 juli: Intercity Berlijn vanuit Duitsland start in veel gevallen in Berlijn Hbf en stopt niet in Berlijn Ostbahnhof\n&lt;br/&gt; 15 juli: ICB 148 stopt niet in Stendal\n&lt;br/&gt; 18 tot en met 21 juli: ICB 245 rijdt tot Berlijn Gesundbrunnen en stopt niet in Berlijn Hbf en Ostbahnhof\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een half uur tot een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 3                                                                                                                                                                                                                                                                                                                                                                                 &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 16 tot en met dinsdag 24 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Eindhoven en Roermond\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 4 &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;ICE International van/naar Frankfurt (M) Hbf/Basel SBB rijdt via een andere route en stopt niet in Arnhem Centraal, Oberhausen, Duisburg en Düsseldorf, maar stopt extra in Mönchengladbach\n&lt;br/&gt; 29 juli: ICE International kan in enkele gevallen niet stoppen in Mönchengladbach, maar stopt extra in Neuss Hbf\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: meer dan een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 5                                                                                                                                                                                                                                                                                                       &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Arnhem Centraal en Mehrhoog \n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner \n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot drie kwartier&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Van en naar Hilversum rijden er geen Intercity's door een defecte bovenleiding.Dit duurt tenminste tot vrijdag 20 juli 05:00 uur.</span>
+<span class="co">#&gt;   Advies               Datum</span>
+<span class="co">#&gt; 1   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 2   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 3   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 4   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 5   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 6   &lt;NA&gt; 2018-07-18 14:24:43</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/disruptions_and_maintenance.html">disruptions_and_maintenance</a></span>(<span class="dt">station =</span> <span class="st">"Rotterdam Centraal"</span>)
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_STATW_rsd_esn_26mei_26jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICBER_asd_berlin_9_22jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ehv_rm_16_24jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICE_asd_basels_18_29jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ah_em_18_29jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_STATW_rsd_esn_26mei_26jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICBER_asd_berlin_9_22jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ehv_rm_16_24jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ICE_asd_basels_18_29jul"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [[1]]</span>
+<span class="co">#&gt; [1] "2018_ah_em_18_29jul"</span>
+<span class="co">#&gt;                                id</span>
+<span class="co">#&gt; 1  2018_STATW_rsd_esn_26mei_26jul</span>
+<span class="co">#&gt; 2   2018_ICBER_asd_berlin_9_22jul</span>
+<span class="co">#&gt; 3            2018_ehv_rm_16_24jul</span>
+<span class="co">#&gt; 4    2018_ICE_asd_basels_18_29jul</span>
+<span class="co">#&gt; 5             2018_ah_em_18_29jul</span>
+<span class="co">#&gt; 6  2018_STATW_rsd_esn_26mei_26jul</span>
+<span class="co">#&gt; 7   2018_ICBER_asd_berlin_9_22jul</span>
+<span class="co">#&gt; 8            2018_ehv_rm_16_24jul</span>
+<span class="co">#&gt; 9    2018_ICE_asd_basels_18_29jul</span>
+<span class="co">#&gt; 10            2018_ah_em_18_29jul</span>
+<span class="co">#&gt; 11                    prio-105154</span>
+<span class="co">#&gt;                                             Traject</span>
+<span class="co">#&gt; 1                     Roosendaal-Antwerpen C.-Puurs</span>
+<span class="co">#&gt; 2        Amsterdam C-Hannover Hbf-Berlin Ostbahnhof</span>
+<span class="co">#&gt; 3                                Eindhoven-Roermond</span>
+<span class="co">#&gt; 4  Amsterdam C-Köln Hbf-Frankfurt (M) Hbf/Basel SBB</span>
+<span class="co">#&gt; 5                    Arnhem Centraal-Düsseldorf Hbf</span>
+<span class="co">#&gt; 6                     Roosendaal-Antwerpen C.-Puurs</span>
+<span class="co">#&gt; 7        Amsterdam C-Hannover Hbf-Berlin Ostbahnhof</span>
+<span class="co">#&gt; 8                                Eindhoven-Roermond</span>
+<span class="co">#&gt; 9  Amsterdam C-Köln Hbf-Frankfurt (M) Hbf/Basel SBB</span>
+<span class="co">#&gt; 10                   Arnhem Centraal-Düsseldorf Hbf</span>
+<span class="co">#&gt; 11                                        Hilversum</span>
+<span class="co">#&gt;                                  Periode Reden</span>
+<span class="co">#&gt; 1                 vanaf zaterdag 26 mei       </span>
+<span class="co">#&gt; 2    maandag 9 tot en met zondag 22 juli      </span>
+<span class="co">#&gt; 3  maandag 16 tot en met dinsdag 24 juli      </span>
+<span class="co">#&gt; 4  woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 5  woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 6                 vanaf zaterdag 26 mei       </span>
+<span class="co">#&gt; 7    maandag 9 tot en met zondag 22 juli      </span>
+<span class="co">#&gt; 8  maandag 16 tot en met dinsdag 24 juli      </span>
+<span class="co">#&gt; 9  woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 10 woensdag 18 tot en met zondag 29 juli      </span>
+<span class="co">#&gt; 11                                  &lt;NA&gt;      </span>
+<span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Bericht</span>
+<span class="co">#&gt; 1                                                                                                                                                                                      &lt;p&gt;\n&lt;b&gt;Wanneer: vanaf zaterdag 26 mei &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: aangepaste dienstregeling&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n&lt;br/&gt; plan uw reis in de Internationale Reisplanner\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 2              &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 9 tot en met zondag 22 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;9 tot en met 22 juli: Intercity Berlijn vanuit Duitsland start in veel gevallen in Berlijn Hbf en stopt niet in Berlijn Ostbahnhof\n&lt;br/&gt; 15 juli: ICB 148 stopt niet in Stendal\n&lt;br/&gt; 18 tot en met 21 juli: ICB 245 rijdt tot Berlijn Gesundbrunnen en stopt niet in Berlijn Hbf en Ostbahnhof\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een half uur tot een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 3                                                                                                                                                                                                                                                                                                                                                                                  &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 16 tot en met dinsdag 24 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Eindhoven en Roermond\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 4  &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;ICE International van/naar Frankfurt (M) Hbf/Basel SBB rijdt via een andere route en stopt niet in Arnhem Centraal, Oberhausen, Duisburg en Düsseldorf, maar stopt extra in Mönchengladbach\n&lt;br/&gt; 29 juli: ICE International kan in enkele gevallen niet stoppen in Mönchengladbach, maar stopt extra in Neuss Hbf\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: meer dan een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 5                                                                                                                                                                                                                                                                                                        &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Arnhem Centraal en Mehrhoog \n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner \n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot drie kwartier&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 6                                                                                                                                                                                      &lt;p&gt;\n&lt;b&gt;Wanneer: vanaf zaterdag 26 mei &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: aangepaste dienstregeling&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n&lt;br/&gt; plan uw reis in de Internationale Reisplanner\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 7              &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 9 tot en met zondag 22 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;9 tot en met 22 juli: Intercity Berlijn vanuit Duitsland start in veel gevallen in Berlijn Hbf en stopt niet in Berlijn Ostbahnhof\n&lt;br/&gt; 15 juli: ICB 148 stopt niet in Stendal\n&lt;br/&gt; 18 tot en met 21 juli: ICB 245 rijdt tot Berlijn Gesundbrunnen en stopt niet in Berlijn Hbf en Ostbahnhof\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een half uur tot een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 8                                                                                                                                                                                                                                                                                                                                                                                  &lt;p&gt;\n&lt;b&gt;Wanneer: maandag 16 tot en met dinsdag 24 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Eindhoven en Roermond\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 9  &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;ICE International van/naar Frankfurt (M) Hbf/Basel SBB rijdt via een andere route en stopt niet in Arnhem Centraal, Oberhausen, Duisburg en Düsseldorf, maar stopt extra in Mönchengladbach\n&lt;br/&gt; 29 juli: ICE International kan in enkele gevallen niet stoppen in Mönchengladbach, maar stopt extra in Neuss Hbf\n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner en check uw reis kort voor vertrek\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: meer dan een uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 10                                                                                                                                                                                                                                                                                                       &lt;p&gt;\n&lt;b&gt;Wanneer: woensdag 18 tot en met zondag 29 juli&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de bussen&lt;/b&gt;\n&lt;br/&gt;er rijden bussen tussen Arnhem Centraal en Mehrhoog \n&lt;br/&gt; plan uw reis met behulp van de internationale reisplanner \n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot drie kwartier&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;</span>
+<span class="co">#&gt; 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Van en naar Hilversum rijden er geen Intercity's door een defecte bovenleiding.Dit duurt tenminste tot vrijdag 20 juli 05:00 uur.</span>
+<span class="co">#&gt;    Advies               Datum</span>
+<span class="co">#&gt; 1    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 2    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 3    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 4    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 5    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 6    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 7    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 8    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 9    &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 10   &lt;NA&gt;                &lt;NA&gt;</span>
+<span class="co">#&gt; 11   &lt;NA&gt; 2018-07-18 14:24:43</span></code></pre></div>
 </div>
   </div>
 
@@ -214,6 +427,9 @@ ams_to_groningen[,<span class="dv">1</span><span class="op">:</span><span class=
       </ul>
 </li>
       <li><a href="#getting-travel-advise">Getting travel advise</a></li>
+      <li><a href="#stationlist">Stationlist</a></li>
+      <li><a href="#departures">Departures</a></li>
+      <li><a href="#disruptions-and-maintenance">disruptions and maintenance</a></li>
       </ul>
 </div>
       </div>

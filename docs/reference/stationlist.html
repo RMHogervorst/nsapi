@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get travel advise from one station to another station — travel_advise • nsapi</title>
+<title>Get a complete list of all the stations — stationlist • nsapi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,11 @@
 
 
 
-<meta property="og:title" content="Get travel advise from one station to another station — travel_advise" />
+<meta property="og:title" content="Get a complete list of all the stations — stationlist" />
 
-<meta property="og:description" content="This is equivalent to the NS reisplanner, you give
-in a from and to station time, departure or arrival, and optionally if you have
-a NS year card (has effect on some travels). You can also specify how many trips
-before and after the chosen time you want to call." />
+<meta property="og:description" content="This function should not be called too often.
+The stations will probably not change a lot so it might
+be better to save it as a dataframe in your local environment for further use." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,75 +114,31 @@ before and after the chosen time you want to call." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get travel advise from one station to another station</h1>
+    <h1>Get a complete list of all the stations</h1>
     <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/api_calls_authentification.R'><code>R/api_calls_authentification.R</code></a></small>
-    <div class="hidden name"><code>travel_advise.Rd</code></div>
+    <div class="hidden name"><code>stationlist.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This is equivalent to the <a href='https://www.ns.nl/reisplanner#/'>NS reisplanner</a>, you give
-in a from and to station time, departure or arrival, and optionally if you have
-a NS year card (has effect on some travels). You can also specify how many trips
-before and after the chosen time you want to call.</p>
+    <p>This function should not be called too often.
+The stations will probably not change a lot so it might
+be better to save it as a dataframe in your local environment for further use.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>travel_advise</span>(<span class='no'>fromStation</span>, <span class='no'>toStation</span>, <span class='kw'>dateTime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>departure</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>yearCard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hslAllowed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>previousAdvices</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>nextAdvices</span> <span class='kw'>=</span> <span class='fl'>4</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>fromStation</th>
-      <td><p>the station to start from, for instance "Rotterdam Centraal"</p></td>
-    </tr>
-    <tr>
-      <th>toStation</th>
-      <td><p>the station to end, for instance "Utrecht Centraal"</p></td>
-    </tr>
-    <tr>
-      <th>dateTime</th>
-      <td><p>defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the <code><a href='datetime.html'>datetime()</a></code> function</p></td>
-    </tr>
-    <tr>
-      <th>departure</th>
-      <td><p>is the datetime the start or end time? do you want to depart on that date or arrive, defaults to departure</p></td>
-    </tr>
-    <tr>
-      <th>yearCard</th>
-      <td><p>if you have a NS year card (jaarabonnement) some trips will be different</p></td>
-    </tr>
-    <tr>
-      <th>hslAllowed</th>
-      <td><p>use of the highspeed train</p></td>
-    </tr>
-    <tr>
-      <th>previousAdvices</th>
-      <td><p>how many advices do you want before the time</p></td>
-    </tr>
-    <tr>
-      <th>nextAdvices</th>
-      <td><p>how many advises do you want after</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='fu'>stationlist</span>()</pre>
+        
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Some things to consider: station names need to be in Dutch and the NS webservice also
-accepts shortened versions: "Utrecht Centraal" and "ut" is apparently the same.
-Station names can be found with the <code><a href='stationlist.html'>stationlist()</a></code> call.</p>
-<p>Although the documentation <a href='https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html'>https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html</a> is in
-english, the returns are all in Dutch. And I keep the results in English.</p>
+    <p>The dataframe consists of all the Dutch stations, many German and Belgian stations and
+bigger stations in other countries in Europe.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
           </ul>

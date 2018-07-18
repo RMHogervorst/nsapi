@@ -88,10 +88,13 @@
 <a href="#nsapi" class="anchor"></a>nsapi</h1></div>
 <p>The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an API where we can query for travel advise, see the current trains on a given station, see if there is any delays or work on the tracks and NS also provides a list with geolocation of all the stations.</p>
 <p>The goal of nsapi is to make it easy to gather data from the NS api. The package strives to return data.frames</p>
+<div class="figure">
+<img src="reference/figures/nsapilogo.png" alt="an incredibly ugly logo for this package, we need a logo man!"><p class="caption">an incredibly ugly logo for this package, we need a logo man!</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of nsapi from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
+<p>You can NOT YET install the released version of nsapi from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nsapi"</span>)</code></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
@@ -111,28 +114,27 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
   <span class="dt">nextAdvices =</span> <span class="dv">1</span>)
 treinplanner
 <span class="co">#&gt;   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span>
-<span class="co">#&gt; 1      NA                 1             1:00            1:00</span>
-<span class="co">#&gt; 2      NA                 0             0:42            0:42</span>
-<span class="co">#&gt; 3      NA                 1             0:56            0:56</span>
+<span class="co">#&gt; 1      NA                 0             0:42            0:42</span>
+<span class="co">#&gt; 2      NA                 1             0:56            0:56</span>
 <span class="co">#&gt;   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd</span>
-<span class="co">#&gt; 1              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-17 18:30:00</span>
-<span class="co">#&gt; 2              &lt;NA&gt;               &lt;NA&gt;     TRUE 2018-07-17 18:52:00</span>
-<span class="co">#&gt; 3              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-17 18:53:00</span>
+<span class="co">#&gt; 1              &lt;NA&gt;               &lt;NA&gt;     TRUE 2018-07-18 15:22:00</span>
+<span class="co">#&gt; 2              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-18 15:23:00</span>
 <span class="co">#&gt;    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd</span>
-<span class="co">#&gt; 1 2018-07-17 18:30:00  2018-07-17 19:30:00 2018-07-17 19:30:00</span>
-<span class="co">#&gt; 2 2018-07-17 18:52:00  2018-07-17 19:34:00 2018-07-17 19:34:00</span>
-<span class="co">#&gt; 3 2018-07-17 18:53:00  2018-07-17 19:49:00 2018-07-17 19:49:00</span>
+<span class="co">#&gt; 1 2018-07-18 15:22:00  2018-07-18 16:04:00 2018-07-18 16:04:00</span>
+<span class="co">#&gt; 2 2018-07-18 15:23:00  2018-07-18 16:19:00 2018-07-18 16:19:00</span>
 <span class="co">#&gt;         Status     ReisDeel</span>
-<span class="co">#&gt; 1    VERTRAAGD c("NS", ....</span>
-<span class="co">#&gt; 2 VOLGENS-PLAN NS, Inte....</span>
-<span class="co">#&gt; 3 VOLGENS-PLAN c("NS", ....</span></code></pre></div>
+<span class="co">#&gt; 1 VOLGENS-PLAN NS, Inte....</span>
+<span class="co">#&gt; 2 VOLGENS-PLAN c("NS", ....</span></code></pre></div>
 </div>
 <div id="metadata" class="section level2">
 <h2 class="hasAnchor">
 <a href="#metadata" class="anchor"></a>Metadata</h2>
 <p>The package is MIT licensed although the information from NS is probably propriatary.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">codecoverage &lt;-<span class="st"> </span>covr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/covr/topics/package_coverage">package_coverage</a></span>(<span class="dt">path =</span> <span class="st">"."</span>,<span class="dt">type =</span> <span class="st">"tests"</span>)
-<span class="kw">print</span>(codecoverage)</code></pre></div>
+<span class="kw">print</span>(codecoverage)
+<span class="co">#&gt; nsapi Coverage: 48.91%</span>
+<span class="co">#&gt; R/utils.R: 48.28%</span>
+<span class="co">#&gt; R/api_calls_authentification.R: 51.28%</span></code></pre></div>
 </div>
 </div>
   </div>
