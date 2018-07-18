@@ -38,3 +38,6 @@ test_that("travel_advise returns proper values",{
   advise_today <- travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal",departure = TRUE,yearCard = TRUE,previousAdvices = 1, nextAdvices = 1)
   expect_true(is.data.frame(advise_today))
 })
+
+
+# all parsing files.

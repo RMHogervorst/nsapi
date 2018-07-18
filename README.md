@@ -7,6 +7,8 @@ The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an API where
 
 The goal of nsapi is to make it easy to gather data from the NS api. The package strives to return data.frames
 
+![an incredibly ugly logo for this package, we need a logo man!](man/figures/nsapilogo.png)
+
 Installation
 ------------
 
@@ -42,21 +44,17 @@ treinplanner <- travel_advise(
   nextAdvices = 1)
 treinplanner
 #>   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd
-#> 1      NA                 1             1:00            1:00
-#> 2      NA                 0             0:42            0:42
-#> 3      NA                 1             0:56            0:56
+#> 1      NA                 0             0:42            0:42
+#> 2      NA                 1             0:56            0:56
 #>   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd
-#> 1              <NA>               <NA>    FALSE 2018-07-17 18:30:00
-#> 2              <NA>               <NA>     TRUE 2018-07-17 18:52:00
-#> 3              <NA>               <NA>    FALSE 2018-07-17 18:53:00
+#> 1              <NA>               <NA>     TRUE 2018-07-18 15:22:00
+#> 2              <NA>               <NA>    FALSE 2018-07-18 15:23:00
 #>    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd
-#> 1 2018-07-17 18:30:00  2018-07-17 19:30:00 2018-07-17 19:30:00
-#> 2 2018-07-17 18:52:00  2018-07-17 19:34:00 2018-07-17 19:34:00
-#> 3 2018-07-17 18:53:00  2018-07-17 19:49:00 2018-07-17 19:49:00
+#> 1 2018-07-18 15:22:00  2018-07-18 16:04:00 2018-07-18 16:04:00
+#> 2 2018-07-18 15:23:00  2018-07-18 16:19:00 2018-07-18 16:19:00
 #>         Status     ReisDeel
-#> 1    VERTRAAGD c("NS", ....
-#> 2 VOLGENS-PLAN NS, Inte....
-#> 3 VOLGENS-PLAN c("NS", ....
+#> 1 VOLGENS-PLAN NS, Inte....
+#> 2 VOLGENS-PLAN c("NS", ....
 ```
 
 Metadata
@@ -67,4 +65,7 @@ The package is MIT licensed although the information from NS is probably propria
 ``` r
 codecoverage <- covr::package_coverage(path = ".",type = "tests")
 print(codecoverage)
+#> nsapi Coverage: 48.91%
+#> R/utils.R: 48.28%
+#> R/api_calls_authentification.R: 51.28%
 ```

@@ -90,12 +90,76 @@ if you have to switch trains there will be more than 1 row in the ReisDeel colum
 For instance in the first row:
 
 ```{r}
-tibble::as_tibble(ams_to_groningen$ReisDeel[[1]])
+ams_to_groningen$ReisDeel[[1]]
 ```
 
 And every part of the trip has stops where the train stops:
 
 ```{r}
-tibble::as_tibble(ams_to_groningen$ReisDeel[[1]]$Stops[[2]])
+ams_to_groningen$ReisDeel[[1]]$Stops[[2]]
 ```
 
+# Stationlist
+Another endpoint of the API is a list of stations
+
+```{r}
+stations <- stationlist()
+head(stations)
+names(stations)
+```
+
+This wil return a dataframe with all the stations in the NS api.
+There are not only Dutch stations, but also multiple Belgian, German, English, Austrian, French,Polish and other country stations. 
+Every station has an international code, name, synonyms, geolocation (lat, lon), and type of station. 
+
+```{r, eval=FALSE}
+# code is not executed, I don't want to add these dependencies to the package
+library(tidyverse)
+library(ggrepel)
+stations <- 
+  stations %>% 
+  mutate(Naam = map_chr(Namen, ~.[["Kort"]][[1]]),
+  Label = ifelse(Type == "knooppuntIntercitystation", Naam,NA) ) %>% 
+  as.tibble() 
+
+stations %>% 
+  filter(Land == "NL") %>% 
+  ggplot(aes(Lon, Lat, label = Label))+ 
+  geom_point(alpha = 1/3)+
+  geom_text_repel()+
+  coord_map()+
+  labs(
+    title = "Only Dutch Stations",
+    subtitle = "Major stations named",
+    caption = "Data: NS 2018 (Dutch National Railways)"
+  )
+```
+
+![Plot of Dutch stations' locations](../man/figures/Dutch_stations.png)
+
+
+# Departures
+
+You can see the departure times of any station at this time by calling the `departures()` function. 
+
+```{r}
+leiden_trains <- departures(station = "Leiden Lammenschans")
+head(leiden_trains)
+
+```
+
+
+
+
+# disruptions and maintenance
+
+Can be called without arguments and with
+
+```{r}
+disruptions_and_maintenance()
+```
+
+
+```{r}
+disruptions_and_maintenance(station = "Rotterdam Centraal")
+```

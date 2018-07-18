@@ -34,7 +34,7 @@ before and after the chosen time you want to call.
 \details{
 Some things to consider: station names need to be in Dutch and the NS webservice also
 accepts shortened versions: "Utrecht Centraal" and "ut" is apparently the same.
-Station names can be found with the stationfinder call.
+Station names can be found with the \code{stationlist()} call.
 
 Although the documentation \url{https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html} is in
 english, the returns are all in Dutch. And I keep the results in English.

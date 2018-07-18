@@ -60,7 +60,7 @@ Following possible returns:
 Er zullen minimaal 10 vertrektijden worden geretourneerd en minimaal de vertrektijden voor het komende uur
 
 https://webservices.ns.nl/ns-api-avt?station=ut
-
+up to date departure times
 
 * Storingen en werkzaamheden
 

@@ -26,7 +26,7 @@ nsapi_client <- crul::HttpClient$new(
   auth = crul::auth(user = Sys.getenv("NSAPIACCOUNT",unset = NA),
               pwd = Sys.getenv("NSAPIPW", unset = NA),
               auth = "basic"),
-  opts = list(timeout_ms = 500),
+  opts = list(timeout_ms = 800),
   headers = list(`User-Agent` = "ns_api_r_package")
 )
 
@@ -50,7 +50,7 @@ datetime <- function(date , time ){
 #'
 #' Some things to consider: station names need to be in Dutch and the NS webservice also
 #' accepts shortened versions: "Utrecht Centraal" and "ut" is apparently the same.
-#' Station names can be found with the stationfinder call.
+#' Station names can be found with the `stationlist()` call.
 #'
 #' Although the documentation <https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html> is in
 #' english, the returns are all in Dutch. And I keep the results in English.
@@ -82,8 +82,66 @@ travel_advise <- function(fromStation, toStation, dateTime = NULL,
                                       previousAdvices=previousAdvices,
                                       nextAdvices=nextAdvices
                                     ))
-  response$raise_for_status()
-  list_response <- xml2::as_list(xml2::as_xml_document(response$parse("UTF-8") ))[[1]]
+
+  list_response <- deal_with_response(response)
   parse_reismogelijkheden(list_response)
 }
+
+#' Get a complete list of all the stations
+#'
+#' This function should not be called too often.
+#' The stations will probably not change a lot so it might
+#' be better to save it as a dataframe in your local environment for further use.
+#'
+#' The dataframe consists of all the Dutch stations, many German and Belgian stations and
+#' bigger stations in other countries in Europe.
+#'
+#' @export
+stationlist <- function(){
+  response <- nsapi_client$get(path = "/ns-api-stations-v2")
+  list_response <- deal_with_response(response)
+  parse_stations(list_response)
+}
+
+#' Get up to date departures from a station
+#'
+#' Shows up to date departure times for a station. Displays all departing
+#' trains for the next hour.
+#' At least 10 departure times will be sent back and at least all the
+#' departure times for the next hour.
+#' @param station station names need to be in Dutch and the NS webservic also accepts short versions:f.i. Groningen or GN
+#' @export
+departures <- function(station){
+  response <- nsapi_client$get(path = "/ns-api-avt", query = list(station=station))
+  list_response <- deal_with_response(response)
+  parse_vertrekkende_treinen(list_response)
+}
+
+
+
+
+
+#' Get disruptions and engineering work
+#'
+#'
+#' - current disruptions  (=unscheduled disruptions + current engineering work)
+#' - scheduled engineering work(=scheduled engineering work)
+#' - current disruptions for a specific station (=unscheduled disruptions + current engineering work)
+#' @param station  station names need to be in Dutch and the NS webservic also accepts short versions:f.i. Groningen or GN
+#' @param actual TRUE or FALSE indicator of the current disruptions must be returned This includes both unscheduled disruptions at the moment of the request, as well as engineering work scheduled to take place within two hours of the request.
+#' @param unplanned TRUE or FALSE indicator of the scheduled engineering work for the next two weeks must be returned.
+#' @export
+disruptions_and_maintenance <- function(station = NULL, actual = TRUE, unplanned= TRUE ){
+  # reverse unplanned because the NS has made this weird.
+  unplanned <- !unplanned
+  response <- nsapi_client$get(path = "/ns-api-storingen",
+                               query = list(
+                                 station=station,
+                                 actual = actual,
+                                 unplanned = unplanned
+                                 ) )
+  list_response <- deal_with_response(response)
+  parse_disruptions(list_response)
+}
+
 

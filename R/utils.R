@@ -95,7 +95,104 @@ find_reisdelen <- function(reisdeel){
 }
 
 
+parse_stations <- function(stationslijst){
+  l_stations <- length(stationslijst)
+  stationframe <- data.frame(
+    Code = character(l_stations),
+    Type = character(l_stations),
+    Namen = I(as.list(rep(NA, l_stations))),
+    Land = character(l_stations),
+    UICCode = character(l_stations),
+    Lat = character(l_stations),
+    Lon = character(l_stations),
+    Synoniemen = I(as.list(rep(NA, l_stations))),
+    stringsAsFactors = FALSE
+  )
+  for (i in seq_len(l_stations)) {
+    stationframe$Code[[i]] <- stationslijst[[i]]$Code[[1]]
+    stationframe$Type[[i]] <- stationslijst[[i]]$Type[[1]]
+    stationframe$Namen[[i]] <- stationslijst[[i]]$Namen
+    stationframe$Land[[i]] <- stationslijst[[i]]$Land[[1]]
+    stationframe$UICCode[[i]] <- stationslijst[[i]]$UICCode[[1]]
+    stationframe$Lat[[i]] <- stationslijst[[i]]$Lat[[1]]
+    stationframe$Lon[[i]] <- stationslijst[[i]]$Lon[[1]]
+    stationframe$Synoniemen[[i]] <- ifelse( unlist(stationslijst[[i]]$Synoniemen) == "\n\t\t\t\n\t\t",NA , stationslijst[[i]]$Synoniemen)
+  }
+  stationframe$Lat <- as.numeric(stationframe$Lat)
+  stationframe$Lon <- as.numeric(stationframe$Lon)
+  stationframe
+}
 
 
 
+parse_vertrekkende_treinen <- function(treinen){
+  l_treinen <- length(treinen)
+  treinen_frame <- data.frame(
+    RitNummer = character(l_treinen),
+    VertrekTijd = as.POSIXct(NA),
+    EindBestemming  = character(l_treinen),
+    TreinSoort = character(l_treinen),
+    RouteTekst = character(l_treinen),
+    Vervoerder = character(l_treinen),
+    VertrekSpoor = character(l_treinen),
+    Spoorwijziging = character(l_treinen),
+    stringsAsFactors = FALSE
+  )
+  for (i in seq_len(l_treinen)) {
+    treinen_frame$Ritnummer[[i]] <- treinen[[i]]$Ritnummer[[1]]
+    treinen_frame$VertrekTijd[[i]] <- parse_time(treinen[[i]]$VertrekTijd[[1]])
+    treinen_frame$EindBestemming[[i]] <- treinen[[i]]$EindBestemming[[1]]
+    treinen_frame$TreinSoort[[i]] <- treinen[[i]]$TreinSoort[[1]]
+    treinen_frame$RouteTekst[[i]] <- null_to_na(treinen[[i]]$RouteTekst[[1]])
+    treinen_frame$VertrekSpoor[[i]] <- treinen[[i]]$VertrekSpoor[[1]]
+    treinen_frame$SpoorWijziging[[i]] <- attr(treinen[[i]]$SpoorWijziging, "wijziging")
+  }
+  treinen_frame
+}
+
+
+
+deal_with_response <- function(response){
+  response$raise_for_status()
+  list_response <- xml2::as_list(xml2::as_xml_document(response$parse("UTF-8") ))[[1]]
+  list_response
+}
+
+
+
+parse_disruptions <- function(disruptions){
+  l_gepl <- length(disruptions$Gepland)
+  l_ongpl <-length(disruptions$Ongepland)
+  tot <- l_gepl + l_ongpl
+  holdingframe <- data.frame(
+    id = character(tot),
+    Traject = character(tot),
+    Periode = character(tot),
+    Reden = character(tot),
+    Bericht = character(tot),
+    Advies = character(tot),
+    Datum = as.POSIXct(NA),
+    stringsAsFactors = FALSE
+  )
+  for (i in seq_len(l_gepl) ) {
+    print(disruptions$Gepland[[i]]$id)
+    holdingframe$id[[i]] <- disruptions$Gepland[[i]]$id[[1]]
+    holdingframe$Traject[[i]] <- disruptions$Gepland[[i]]$Traject[[1]]
+    holdingframe$Periode[[i]] <- null_to_na(disruptions$Gepland[[i]]$Periode[[1]])
+    holdingframe$Bericht[[i]] <- disruptions$Gepland[[i]]$Bericht[[1]]
+    holdingframe$Advies[[i]] <- null_to_na(disruptions$Gepland[[i]]$Advies[[1]])
+    holdingframe$Datum[[i]] <- parse_time( null_to_na(disruptions$Gepland[[i]]$Datum[[1]]))
+  }
+
+  for (j in seq_len(l_ongpl)) {
+    index <- l_gepl + j
+    holdingframe$id[[index]] <- disruptions$Ongepland[[j]]$id[[1]]
+    holdingframe$Traject[[index]] <- disruptions$Ongepland[[j]]$Traject[[1]]
+    holdingframe$Periode[[index]] <- null_to_na(disruptions$Ongepland[[j]]$Periode[[1]])
+    holdingframe$Bericht[[index]] <- disruptions$Ongepland[[j]]$Bericht[[1]]
+    holdingframe$Advies[[index]] <- null_to_na(disruptions$Ongepland[[j]]$Advies[[1]])
+    holdingframe$Datum[[index]] <- parse_time( null_to_na(disruptions$Ongepland[[j]]$Datum[[1]]))
+  }
+  holdingframe
+}
 

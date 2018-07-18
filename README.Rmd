@@ -19,6 +19,8 @@ query for travel advise, see the current trains on a given station, see if there
 
 The goal of nsapi is to make it easy to gather data from the NS api. The package strives to return data.frames
 
+![an incredibly ugly logo for this package, we need a logo man!](man/figures/nsapilogo.png)
+
 ## Installation
 
 You can NOT YET install the released version of nsapi from [CRAN](https://CRAN.R-project.org) with:
@@ -59,7 +61,7 @@ treinplanner
 ## Metadata
 The package is MIT licensed although the information from NS is probably propriatary.
 
-```{r, eval=FALSE}
+```{r}
 codecoverage <- covr::package_coverage(path = ".",type = "tests")
 print(codecoverage)
 ```

@@ -2,3 +2,4 @@
 
 * basic version ready
 * contains api call, secrets
+* 
