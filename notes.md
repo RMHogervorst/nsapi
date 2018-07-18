@@ -13,6 +13,16 @@ notes
 
 
 
+Image use: 
+I have combined several images from the Noun project and the NS logo:
+
+- NS logo- Nederlandse spoorwegen
+- hands on circle: 		Data by Gregor Cresnar from the Noun Project: 
+- train: 				railway by BomSymbols from the Noun Project
+- laptop				Laptop by abdul karim from the Noun Project
+
+
+
 
 # documentatie api van ns
 
