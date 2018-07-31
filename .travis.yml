@@ -4,7 +4,7 @@ language: R
 sudo: false
 cache: packages
 dist: trusty
-r_check_args: "--as-cran --no-build-vignettes"
+#r_check_args: "--as-cran --no-build-vignettes"
 
 addons:
   apt:
