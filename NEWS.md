@@ -1,3 +1,8 @@
+# nsapi 0.1.0
+
+* renamed all functions to start with get_*
+
+
 # nsapi 0.0.0.9000
 
 * basic version ready

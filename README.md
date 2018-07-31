@@ -3,7 +3,7 @@
 nsapi
 =====
 
-[![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/nsapi)](https://cran.r-project.org/package=nsapi) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![thanks-md](https://img.shields.io/badge/THANKS-md-ff69b4.svg)](THANKS.md) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN\_latest\_release\_date](https://www.r-pkg.org/badges/last-release/nsapi)](https://cran.r-project.org/package=nsapi) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![thanks-md](https://img.shields.io/badge/THANKS-md-ff69b4.svg)](THANKS.md) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![Travis-CI Build Status](https://travis-ci.org/RMHogervorst/nsapi.svg?branch=master)](https://travis-ci.org/RMHogervorst/nsapi)
 
 The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an API where we can query for travel advise, see the current trains on a given station, see if there is any delays or work on the tracks and NS also provides a list with geolocation of all the stations.
 
@@ -47,24 +47,24 @@ treinplanner <- get_travel_advise(
 treinplanner
 #>   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd
 #> 1      NA                 0             0:42            0:42
-#> 2    NULL                 1             0:56            0:56
+#> 2      NA                 1             0:56            0:56
 #> 3      NA                 0             0:42            0:42
 #> 4      NA                 1             0:56            0:56
 #>   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd
-#> 1              <NA>               <NA>    FALSE 2018-07-31 11:52:00
-#> 2              <NA>               <NA>    FALSE 2018-07-31 11:53:00
-#> 3              <NA>               <NA>     TRUE 2018-07-31 12:22:00
-#> 4              <NA>               <NA>    FALSE 2018-07-31 12:23:00
+#> 1              <NA>               <NA>    FALSE 2018-07-31 14:22:00
+#> 2              <NA>               <NA>    FALSE 2018-07-31 14:23:00
+#> 3              <NA>               <NA>     TRUE 2018-07-31 14:52:00
+#> 4              <NA>               <NA>    FALSE 2018-07-31 14:53:00
 #>    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd
-#> 1 2018-07-31 11:52:00  2018-07-31 12:34:00 2018-07-31 12:34:00
-#> 2 2018-07-31 11:53:00  2018-07-31 12:49:00 2018-07-31 12:49:00
-#> 3 2018-07-31 12:22:00  2018-07-31 13:04:00 2018-07-31 13:04:00
-#> 4 2018-07-31 12:23:00  2018-07-31 13:19:00 2018-07-31 13:19:00
-#>          Status     ReisDeel
-#> 1  VOLGENS-PLAN NS, Inte....
-#> 2 NIET-MOGELIJK c("NS", ....
-#> 3  VOLGENS-PLAN NS, Inte....
-#> 4  VOLGENS-PLAN c("NS", ....
+#> 1 2018-07-31 14:22:00  2018-07-31 15:04:00 2018-07-31 15:04:00
+#> 2 2018-07-31 14:23:00  2018-07-31 15:19:00 2018-07-31 15:19:00
+#> 3 2018-07-31 14:52:00  2018-07-31 15:34:00 2018-07-31 15:34:00
+#> 4 2018-07-31 14:53:00  2018-07-31 15:49:00 2018-07-31 15:49:00
+#>         Status     ReisDeel
+#> 1 VOLGENS-PLAN NS, Inte....
+#> 2 VOLGENS-PLAN c("NS", ....
+#> 3 VOLGENS-PLAN NS, Inte....
+#> 4 VOLGENS-PLAN c("NS", ....
 ```
 
 FAQ
@@ -94,7 +94,7 @@ The package is MIT licensed although the information from NS is probably proprie
 ``` r
 codecoverage <- covr::package_coverage(path = ".",type = "tests")
 print(codecoverage)
-#> nsapi Coverage: 73.74%
+#> nsapi Coverage: 74.53%
 #> R/utils.R: 70.00%
-#> R/api_calls_authentification.R: 85.42%
+#> R/api_calls_authentification.R: 85.48%
 ```
