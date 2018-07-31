@@ -1,23 +1,24 @@
 # utils
-null_to_na <- function(value){
+null_to_na <- function(value) {
   ifelse(is.null(value), NA, value)
 }
 
-message_part <- function(thing){
+message_part <- function(thing) {
   ifelse(thing, " is set", " is NOT set")
 }
 
-parse_time <- function(value){
+parse_time <- function(value) {
   as.POSIXct(value, format = "%Y-%m-%dT%H:%M:%S%z")
 }
 
 
 
 
-parse_reismogelijkheden <- function(reizen){
+parse_reismogelijkheden <- function(reizen) {
+  # pre allocate dataframe
   l_df <- length(reizen)
   holdingframe <- data.frame(
-    Melding =  I(as.list(rep(NA, l_df))), # this is insane
+    Melding = I(as.list(rep(NA, l_df))), # this is insane
     AantalOverstappen = integer(l_df),
     GeplandeReisTijd = character(l_df),
     ActueleReisTijd = character(l_df),
@@ -25,13 +26,14 @@ parse_reismogelijkheden <- function(reizen){
     AankomstVertraging = character(l_df),
     Optimaal = logical(l_df),
     GeplandeVertrekTijd = as.POSIXct(NA),
-    ActueleVertrekTijd =as.POSIXct(NA),
+    ActueleVertrekTijd = as.POSIXct(NA),
     GeplandeAankomstTijd = as.POSIXct(NA),
-    ActueleAankomstTijd =as.POSIXct(NA),
+    ActueleAankomstTijd = as.POSIXct(NA),
     Status = character(l_df),
     ReisDeel = I(as.list(rep(NA, l_df))),
     stringsAsFactors = FALSE
   )
+  # fill the frame
   for (i in seq_along(reizen)) {
     holdingframe$Melding[[i]] <- null_to_na(reizen[[i]]$Melding[[1]])
     holdingframe$AantalOverstappen[[i]] <- as.integer(reizen[[i]]$AantalOverstappen[[1]])
@@ -45,15 +47,16 @@ parse_reismogelijkheden <- function(reizen){
     holdingframe$GeplandeAankomstTijd[[i]] <- parse_time(reizen[[i]]$GeplandeAankomstTijd[[1]])
     holdingframe$ActueleAankomstTijd[[i]] <- parse_time(reizen[[i]]$ActueleAankomstTijd[[1]])
     holdingframe$Status[[i]] <- reizen[[i]]$Status[[1]]
-    holdingframe$ReisDeel[[i]] <-find_reisdelen(reizen[[i]])
+    holdingframe$ReisDeel[[i]] <- find_reisdelen(reizen[[i]])
   }
+  # return the frame
   holdingframe
 }
 
 
 
-find_reisdelen <- function(reisdeel){
-  ids_reisdeel <- grep("ReisDeel",names(reisdeel))
+find_reisdelen <- function(reisdeel) {
+  ids_reisdeel <- grep("ReisDeel", names(reisdeel))
   l_reisdelen <- length(ids_reisdeel)
   reisdelen <- data.frame(
     Vervoerder = character(l_reisdelen),
@@ -86,7 +89,7 @@ find_reisdelen <- function(reisdeel){
       j <- ids_ritten[[index_ritten]]
       rittenframe$Naam[[index_ritten]] <- reisdeel[[index]][[j]]$Naam[[1]]
       rittenframe$Tijd[[index_ritten]] <- parse_time(reisdeel[[index]][[j]]$Tijd[[1]])
-      rittenframe$Spoor[[index_ritten]] <- null_to_na( reisdeel[[index]][[j]]$Spoor[[1]])
+      rittenframe$Spoor[[index_ritten]] <- null_to_na(reisdeel[[index]][[j]]$Spoor[[1]])
       rittenframe$SpoorWijziging[[index_ritten]] <- null_to_na(attr(reisdeel[[index]][[j]]$Spoor[[1]], "wijziging"))
     }
     reisdelen$Stops[[i]] <- rittenframe
@@ -95,7 +98,7 @@ find_reisdelen <- function(reisdeel){
 }
 
 
-parse_stations <- function(stationslijst){
+parse_stations <- function(stationslijst) {
   l_stations <- length(stationslijst)
   stationframe <- data.frame(
     Code = character(l_stations),
@@ -116,7 +119,7 @@ parse_stations <- function(stationslijst){
     stationframe$UICCode[[i]] <- stationslijst[[i]]$UICCode[[1]]
     stationframe$Lat[[i]] <- stationslijst[[i]]$Lat[[1]]
     stationframe$Lon[[i]] <- stationslijst[[i]]$Lon[[1]]
-    stationframe$Synoniemen[[i]] <- ifelse( unlist(stationslijst[[i]]$Synoniemen) == "\n\t\t\t\n\t\t",NA , stationslijst[[i]]$Synoniemen)
+    stationframe$Synoniemen[[i]] <- ifelse(unlist(stationslijst[[i]]$Synoniemen) == "\n\t\t\t\n\t\t", NA, stationslijst[[i]]$Synoniemen)
   }
   stationframe$Lat <- as.numeric(stationframe$Lat)
   stationframe$Lon <- as.numeric(stationframe$Lon)
@@ -125,12 +128,12 @@ parse_stations <- function(stationslijst){
 
 
 
-parse_vertrekkende_treinen <- function(treinen){
+parse_vertrekkende_treinen <- function(treinen) {
   l_treinen <- length(treinen)
   treinen_frame <- data.frame(
     RitNummer = character(l_treinen),
     VertrekTijd = as.POSIXct(NA),
-    EindBestemming  = character(l_treinen),
+    EindBestemming = character(l_treinen),
     TreinSoort = character(l_treinen),
     RouteTekst = character(l_treinen),
     Vervoerder = character(l_treinen),
@@ -152,18 +155,30 @@ parse_vertrekkende_treinen <- function(treinen){
 
 
 
-deal_with_response <- function(response){
+deal_with_response <- function(response) {
   response$raise_for_status()
-  list_response <- xml2::as_list(xml2::as_xml_document(response$parse("UTF-8") ))[[1]]
+  list_response <- xml2::as_list(xml2::as_xml_document(response$parse("UTF-8")))[[1]]
   list_response
 }
 
 
 
-parse_disruptions <- function(disruptions){
+parse_disruptions <- function(disruptions) {
   l_gepl <- length(disruptions$Gepland)
-  l_ongpl <-length(disruptions$Ongepland)
+  if (l_gepl == 1L) {
+    if (any(disruptions$Gepland[[1]] == "\n\t\t\n\t")) l_gepl <- 0L
+  }
+
+  l_ongpl <- length(disruptions$Ongepland)
+  if (l_ongpl == 1L) {
+    if (any(disruptions$Ongepland[[1]] == "\n\t\t\n\t")) l_ongpl <- 0L
+  }
+
   tot <- l_gepl + l_ongpl
+  if(tot == 0){
+    stop("The API returned empty results\nTry changing actual and unplanned")
+  }
+
   holdingframe <- data.frame(
     id = character(tot),
     Traject = character(tot),
@@ -174,14 +189,13 @@ parse_disruptions <- function(disruptions){
     Datum = as.POSIXct(NA),
     stringsAsFactors = FALSE
   )
-  for (i in seq_len(l_gepl) ) {
-    print(disruptions$Gepland[[i]]$id)
+  for (i in seq_len(l_gepl)) {
     holdingframe$id[[i]] <- disruptions$Gepland[[i]]$id[[1]]
     holdingframe$Traject[[i]] <- disruptions$Gepland[[i]]$Traject[[1]]
     holdingframe$Periode[[i]] <- null_to_na(disruptions$Gepland[[i]]$Periode[[1]])
-    holdingframe$Bericht[[i]] <- disruptions$Gepland[[i]]$Bericht[[1]]
+    holdingframe$Bericht[[i]] <- null_to_na(disruptions$Gepland[[i]]$Bericht[[1]])
     holdingframe$Advies[[i]] <- null_to_na(disruptions$Gepland[[i]]$Advies[[1]])
-    holdingframe$Datum[[i]] <- parse_time( null_to_na(disruptions$Gepland[[i]]$Datum[[1]]))
+    holdingframe$Datum[[i]] <- parse_time(null_to_na(disruptions$Gepland[[i]]$Datum[[1]]))
   }
 
   for (j in seq_len(l_ongpl)) {
@@ -189,10 +203,9 @@ parse_disruptions <- function(disruptions){
     holdingframe$id[[index]] <- disruptions$Ongepland[[j]]$id[[1]]
     holdingframe$Traject[[index]] <- disruptions$Ongepland[[j]]$Traject[[1]]
     holdingframe$Periode[[index]] <- null_to_na(disruptions$Ongepland[[j]]$Periode[[1]])
-    holdingframe$Bericht[[index]] <- disruptions$Ongepland[[j]]$Bericht[[1]]
+    holdingframe$Bericht[[index]] <- null_to_na(disruptions$Ongepland[[j]]$Bericht[[1]])
     holdingframe$Advies[[index]] <- null_to_na(disruptions$Ongepland[[j]]$Advies[[1]])
-    holdingframe$Datum[[index]] <- parse_time( null_to_na(disruptions$Ongepland[[j]]$Datum[[1]]))
+    holdingframe$Datum[[index]] <- parse_time(null_to_na(disruptions$Ongepland[[j]]$Datum[[1]]))
   }
   holdingframe
 }
-

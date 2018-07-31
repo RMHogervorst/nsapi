@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get disruptions and engineering work — disruptions_and_maintenance • nsapi</title>
+<title>Get up to date departures from a station — get_departures • nsapi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,13 @@
 
 
 
-<meta property="og:title" content="Get disruptions and engineering work — disruptions_and_maintenance" />
+<meta property="og:title" content="Get up to date departures from a station — get_departures" />
 
-<meta property="og:description" content="
-current disruptions  (=unscheduled disruptions + current engineering work)
-scheduled engineering work(=scheduled engineering work)
-current disruptions for a specific station (=unscheduled disruptions + current engineering work)
-" />
+<meta property="og:description" content="Shows up to date departure times for a station. Displays all departing
+trains for the next hour.
+At least 10 departure times will be sent back and at least all the
+departure times for the next hour.
+https://www.ns.nl/en/travel-information/ns-api/documentation-up-to-date-departure-times.html." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,23 +116,22 @@ current disruptions for a specific station (=unscheduled disruptions + current e
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get disruptions and engineering work</h1>
+    <h1>Get up to date departures from a station</h1>
     <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/api_calls_authentification.R'><code>R/api_calls_authentification.R</code></a></small>
-    <div class="hidden name"><code>disruptions_and_maintenance.Rd</code></div>
+    <div class="hidden name"><code>get_departures.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <ul>
-<li><p>current disruptions  (=unscheduled disruptions + current engineering work)</p></li>
-<li><p>scheduled engineering work(=scheduled engineering work)</p></li>
-<li><p>current disruptions for a specific station (=unscheduled disruptions + current engineering work)</p></li>
-</ul>
+    <p>Shows up to date departure times for a station. Displays all departing
+trains for the next hour.
+At least 10 departure times will be sent back and at least all the
+departure times for the next hour.
+<a href='https://www.ns.nl/en/travel-information/ns-api/documentation-up-to-date-departure-times.html'>https://www.ns.nl/en/travel-information/ns-api/documentation-up-to-date-departure-times.html</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>disruptions_and_maintenance</span>(<span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>actual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>unplanned</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_departures</span>(<span class='no'>station</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,23 +140,27 @@ current disruptions for a specific station (=unscheduled disruptions + current e
       <th>station</th>
       <td><p>station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN</p></td>
     </tr>
-    <tr>
-      <th>actual</th>
-      <td><p>TRUE or FALSE indicator of the current disruptions must be returned This includes both unscheduled disruptions at the moment of the request, as well as engineering work scheduled to take place within two hours of the request.</p></td>
-    </tr>
-    <tr>
-      <th>unplanned</th>
-      <td><p>TRUE or FALSE indicator of the scheduled engineering work for the next two weeks must be returned.</p></td>
-    </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a dataframe</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>get_departures</span>(<span class='st'>"UT"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

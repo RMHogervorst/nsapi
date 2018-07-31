@@ -12,7 +12,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>", 
+  cache = FALSE
 )
 library(nsapi)
 ```
@@ -20,13 +21,16 @@ library(nsapi)
 
 This is a description and use of all the functions in the package.
 
-The API returns everything in Dutch and therefore I have kept the responses in Dutch as well.
+The API returns everything in Dutch and therefore I have kept the responses in Dutch as well. The NS website does have a English translation which I will link to here: 
+<https://www.ns.nl/en/travel-information/ns-api>.
 
-# Authentification
+First a description of how to set up your username and password and than a breakdown of all the functions.
+
+# Authentication
 Before you can use any of the functions you need a username and password
 To get that go to: <https://www.ns.nl/ews-aanvraagformulier/>
 
-You will recieve a confirmation email, and finally a username and password (that can't be changed for some reason).
+You will receive a confirmation email, and finally a username and password (that can't be changed for some reason).
 
 You need to add the username and password to your rsession for the nsapi package to work.
 Why? Good question! It is not smart to type your passwords in a R session, they will end up in your history file and will be available for everyone who searches your computer. 
@@ -56,17 +60,24 @@ NSAPIPW = yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod
 NSAPIACCOUNT = probablyyouremail@email.com
 ```
 
+How do you know if you succeeded?
+
+```{r}
+check_ns_api_keys()
+```
+
 
 # Getting travel advise
 
-If you'd like to know when your
+If you'd like to know when your train from Amsterdam to Groningen goes,
+use the travel_advise function with departure and arrival station. 
 
 ```{r}
 library(nsapi)
-ams_to_groningen <- travel_advise(
+ams_to_groningen <- get_travel_advise(
   fromStation = "Amsterdam Centraal",
   toStation = "Groningen",
-  #dateTime = , # I don't use it 
+  #dateTime = , # I don't use it because I want to leave now!
   departure = TRUE  # I want to depart now
 )
 ams_to_groningen[,1:5]
@@ -78,12 +89,13 @@ The function returns a data.frame with 4 advises before and 4 after the time you
 ams_to_groningen[,6:8]
 ```
 
-The column Reisdeel is a nested dataframe with a nested dataframe called stops within. 
+## More details about the returned dataframe.
+The column Reisdeel is a nested data frame with a nested data frame called stops within. 
 
 ```{r}
 str(ams_to_groningen[1,13])
 ```
- The api returns a lot of nested information, and as a consequence the data.frame is nested too.
+ The API returns a lot of nested information, and as a consequence the data.frame is nested too.
 
 Every row is thus an advise with arrival and departure times and travelparts,
 if you have to switch trains there will be more than 1 row in the ReisDeel column.
@@ -100,24 +112,24 @@ ams_to_groningen$ReisDeel[[1]]$Stops[[2]]
 ```
 
 # Stationlist
-Another endpoint of the API is a list of stations
+Another endpoint of the API is a list of stations. 
 
 ```{r}
-stations <- stationlist()
+stations <- get_stationlist()
 head(stations)
 names(stations)
 ```
 
-This wil return a dataframe with all the stations in the NS api.
+This will return a data frame with all the stations in the NS API.
 There are not only Dutch stations, but also multiple Belgian, German, English, Austrian, French,Polish and other country stations. 
-Every station has an international code, name, synonyms, geolocation (lat, lon), and type of station. 
+Every station has an international code, name, synonyms, geolocation (Lat, Lon), and type of station. 
 
 ```{r, eval=FALSE}
 # code is not executed, I don't want to add these dependencies to the package
 library(tidyverse)
 library(ggrepel)
 stations <- 
-  stations %>% 
+  get_stations %>% 
   mutate(Naam = map_chr(Namen, ~.[["Kort"]][[1]]),
   Label = ifelse(Type == "knooppuntIntercitystation", Naam,NA) ) %>% 
   as.tibble() 
@@ -143,23 +155,44 @@ stations %>%
 You can see the departure times of any station at this time by calling the `departures()` function. 
 
 ```{r}
-leiden_trains <- departures(station = "Leiden Lammenschans")
+leiden_trains <- get_departures(station = "Leiden Lammenschans")
 head(leiden_trains)
 
 ```
 
 
+# Disruptions and maintenance
 
+These 3 functions call out to find out about disruptions and engineering on the tracks for the current time, for the next 2 weeks or a specific station.
+Every call returns a dataframe with "id", "Traject", "Periode", "Reden", "Bericht", "Advies", and "Datum". 
 
-# disruptions and maintenance
+Bericht is often a complete message with html markup:
 
-Can be called without arguments and with
-
-```{r}
-disruptions_and_maintenance()
+```
+<p>\n<b>Wanneer: vanaf zaterdag 26 mei </b><br/>\n<b>Oorzaak: aangepaste dienstregeling</b><br/>\n<b>Advies: U kunt gebruikmaken van de gewijzigde dienstregeling</b>\n<br/>Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n<br/> plan uw reis in de Internationale Reisplanner\n<br/> <br/>\n  <b>Extra reistijd: een kwartier tot een half uur</b><br/>\n</p>
 ```
 
+## Current disruptions  (=unscheduled disruptions + current engineering work)
+
+Showing only columns Traject and Periode:
 
 ```{r}
-disruptions_and_maintenance(station = "Rotterdam Centraal")
+current <- get_current_disruptions()
+current[1:2, c("Traject", "Periode")] # I'll show a sample of the responses
+```
+## Scheduled engineering work(=scheduled engineering work) 
+This call returns scheduled engineering work for the next 2 weeks.
+
+example:
+```{r}
+sched <- get_scheduled_engineering_work()
+sched[2:4,c("Traject","Periode", "Advies")]
+```
+
+## Current disruptions for a specific station (=unscheduled disruptions + current engineering work)
+
+Showing only first 2 messages:
+
+```{r}
+get_disruptions_station(station = "Rotterdam Centraal")$Bericht[1:2]
 ```

@@ -32,7 +32,9 @@
 
 <meta property="og:title" content="Translate date and time into datetime stamp to use in api call — datetime" />
 
-<meta property="og:description" content="Translate date and time into datetime stamp to use in api call" />
+<meta property="og:description" content="The datetime stamp format might be a bit difficult to use. This
+helper function allows you to supply the date and time and a datetime
+character string comes out." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -119,7 +121,9 @@
 
     <div class="ref-description">
     
-    <p>Translate date and time into datetime stamp to use in api call</p>
+    <p>The datetime stamp format might be a bit difficult to use. This
+helper function allows you to supply the date and time and a datetime
+character string comes out.</p>
     
     </div>
 
@@ -139,12 +143,23 @@
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='get_travel_advise.html'>get_travel_advise</a></span>(
+    <span class='kw'>fromStation</span> <span class='kw'>=</span> <span class='st'>"Amsterdam Centraal"</span>,
+    <span class='kw'>toStation</span> <span class='kw'>=</span> <span class='st'>"Utrecht Centraal"</span>,
+    <span class='kw'>dateTime</span> <span class='kw'>=</span> <span class='fu'>datetime</span>(<span class='st'>"2018-08-21"</span>,<span class='st'>"15:21"</span>),
+    <span class='kw'>departure</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    )
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

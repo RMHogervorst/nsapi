@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get disruptions and engineering work — disruptions_and_maintenance • nsapi</title>
+<title>Get travel advise from one station to another station — get_travel_advise • nsapi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,12 @@
 
 
 
-<meta property="og:title" content="Get disruptions and engineering work — disruptions_and_maintenance" />
+<meta property="og:title" content="Get travel advise from one station to another station — get_travel_advise" />
 
-<meta property="og:description" content="
-current disruptions  (=unscheduled disruptions + current engineering work)
-scheduled engineering work(=scheduled engineering work)
-current disruptions for a specific station (=unscheduled disruptions + current engineering work)
-" />
+<meta property="og:description" content="This is equivalent to the NS reisplanner,
+you give in a from and to station, the timestamp, if you want the time
+to be your departure or arrival time, and optionally if you have a NS year
+card (has effect on some travels)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,48 +115,90 @@ current disruptions for a specific station (=unscheduled disruptions + current e
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get disruptions and engineering work</h1>
+    <h1>Get travel advise from one station to another station</h1>
     <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/api_calls_authentification.R'><code>R/api_calls_authentification.R</code></a></small>
-    <div class="hidden name"><code>disruptions_and_maintenance.Rd</code></div>
+    <div class="hidden name"><code>get_travel_advise.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <ul>
-<li><p>current disruptions  (=unscheduled disruptions + current engineering work)</p></li>
-<li><p>scheduled engineering work(=scheduled engineering work)</p></li>
-<li><p>current disruptions for a specific station (=unscheduled disruptions + current engineering work)</p></li>
-</ul>
+    <p>This is equivalent to the <a href='https://www.ns.nl/reisplanner#/'>NS reisplanner</a>,
+you give in a from and to station, the timestamp, if you want the time
+to be your departure or arrival time, and optionally if you have a NS year
+card (has effect on some travels).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>disruptions_and_maintenance</span>(<span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>actual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>unplanned</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_travel_advise</span>(<span class='no'>fromStation</span>, <span class='no'>toStation</span>, <span class='kw'>dateTime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>departure</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>yearCard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hslAllowed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>previousAdvises</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>nextAdvises</span> <span class='kw'>=</span> <span class='fl'>4</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>station</th>
-      <td><p>station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN</p></td>
+      <th>fromStation</th>
+      <td><p>the station to start from, for instance "Rotterdam Centraal"</p></td>
     </tr>
     <tr>
-      <th>actual</th>
-      <td><p>TRUE or FALSE indicator of the current disruptions must be returned This includes both unscheduled disruptions at the moment of the request, as well as engineering work scheduled to take place within two hours of the request.</p></td>
+      <th>toStation</th>
+      <td><p>the station to end, for instance "Utrecht Centraal"</p></td>
     </tr>
     <tr>
-      <th>unplanned</th>
-      <td><p>TRUE or FALSE indicator of the scheduled engineering work for the next two weeks must be returned.</p></td>
+      <th>dateTime</th>
+      <td><p>defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the <code><a href='datetime.html'>datetime()</a></code> function</p></td>
+    </tr>
+    <tr>
+      <th>departure</th>
+      <td><p>is the datetime the start or end time? do you want to depart on that date or arrive, defaults to departure</p></td>
+    </tr>
+    <tr>
+      <th>yearCard</th>
+      <td><p>if you have a NS year card (jaarabonnement) some trips will be different</p></td>
+    </tr>
+    <tr>
+      <th>hslAllowed</th>
+      <td><p>use of the high speed train</p></td>
+    </tr>
+    <tr>
+      <th>previousAdvises</th>
+      <td><p>how many advices do you want before the time</p></td>
+    </tr>
+    <tr>
+      <th>nextAdvises</th>
+      <td><p>how many advises do you want after</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>You can also specify how many trips before and after the chosen time you
+want to collect (defaults to 4, maximum is 5 before, and 5 after).</p>
+<p>Some things to consider: station names need to be in Dutch but the NS
+webservice also accepts shortened versions: "Utrecht Centraal" and
+"ut" is apparently the same.
+Station names can be found with the <code><a href='get_stationlist.html'>get_stationlist()</a></code> call.</p>
+<p>Although the documentation
+<a href='https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html'>https://www.ns.nl/en/travel-information/ns-api/documentation-travel-recommendations.html</a>
+is in English, the returned values are all in Dutch. And I keep the results
+in Dutch.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>get_travel_advise</span>(<span class='st'>"Amsterdam Centraal"</span>,
+<span class='st'>"Utrecht Centraal"</span>,<span class='kw'>dateTime</span> <span class='kw'>=</span> <span class='st'>"2018-08-01T15:21"</span>,<span class='kw'>departure</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

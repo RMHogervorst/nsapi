@@ -12,5 +12,17 @@ datetime(date, time)
 \item{time}{time in standard format (HH:MM): 20:21}
 }
 \description{
-Translate date and time into datetime stamp to use in api call
+The datetime stamp format might be a bit difficult to use. This
+helper function allows you to supply the date and time and a datetime
+character string comes out.
+}
+\examples{
+\dontrun{
+get_travel_advise(
+    fromStation = "Amsterdam Centraal",
+    toStation = "Utrecht Centraal",
+    dateTime = datetime("2018-08-21","15:21"),
+    departure = TRUE
+    )
+}
 }

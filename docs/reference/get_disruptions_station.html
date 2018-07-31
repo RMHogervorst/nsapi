@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get disruptions and engineering work — disruptions_and_maintenance • nsapi</title>
+<title>Get disruptions and engineering work — get_disruptions_station • nsapi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,10 @@
 
 
 
-<meta property="og:title" content="Get disruptions and engineering work — disruptions_and_maintenance" />
+<meta property="og:title" content="Get disruptions and engineering work — get_disruptions_station" />
 
-<meta property="og:description" content="
-current disruptions  (=unscheduled disruptions + current engineering work)
-scheduled engineering work(=scheduled engineering work)
-current disruptions for a specific station (=unscheduled disruptions + current engineering work)
-" />
+<meta property="og:description" content="These 3 functions call out to find out about disruptions and engineering on
+the tracks for the current time, for the next 2 weeks or a specific station." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,38 +115,60 @@ current disruptions for a specific station (=unscheduled disruptions + current e
     <div class="page-header">
     <h1>Get disruptions and engineering work</h1>
     <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/api_calls_authentification.R'><code>R/api_calls_authentification.R</code></a></small>
-    <div class="hidden name"><code>disruptions_and_maintenance.Rd</code></div>
+    <div class="hidden name"><code>get_disruptions_station.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <ul>
-<li><p>current disruptions  (=unscheduled disruptions + current engineering work)</p></li>
-<li><p>scheduled engineering work(=scheduled engineering work)</p></li>
-<li><p>current disruptions for a specific station (=unscheduled disruptions + current engineering work)</p></li>
-</ul>
+    <p>These 3 functions call out to find out about disruptions and engineering on
+the tracks for the current time, for the next 2 weeks or a specific station.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>disruptions_and_maintenance</span>(<span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>actual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>unplanned</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_disruptions_station</span>(<span class='no'>station</span>)
+
+<span class='fu'>get_current_disruptions</span>()
+
+<span class='fu'>get_scheduled_engineering_work</span>()</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>station</th>
-      <td><p>station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN</p></td>
-    </tr>
-    <tr>
-      <th>actual</th>
-      <td><p>TRUE or FALSE indicator of the current disruptions must be returned This includes both unscheduled disruptions at the moment of the request, as well as engineering work scheduled to take place within two hours of the request.</p></td>
-    </tr>
-    <tr>
-      <th>unplanned</th>
-      <td><p>TRUE or FALSE indicator of the scheduled engineering work for the next two weeks must be returned.</p></td>
+      <td><p>optional, station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a dataframe</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <ul>
+<li><p>current disruptions  (=unscheduled disruptions + current engineering work)</p></li>
+</ul>
+    <p>These are all the disruptions of the railroad at this moment. So both
+unscheduled work and work
+and work that was scheduled and currently underway.
+Use <code>get_current_disruptions()</code></p><ul>
+<li><p>scheduled engineering work(=scheduled engineering work)</p></li>
+</ul>
+    <p>Get all the scheduled engineering work for the next 2 weeks
+with <code>get_scheduled_engineering_work()</code>. This will exclude
+work that was unplanned.</p><ul>
+<li><p>current disruptions for a specific station (=unscheduled disruptions + current engineering work)</p></li>
+</ul>
+    <p>Use <code>get_disruptions_station()</code> and give a station name as argument.</p>
+<p><a href='https://www.ns.nl/en/travel-information/ns-api/documentation-disruptions-and-maintenance-work.html'>https://www.ns.nl/en/travel-information/ns-api/documentation-disruptions-and-maintenance-work.html</a></p>
+    
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    <ul>
+<li><p><code>get_current_disruptions</code>: current disruptions</p></li>
+<li><p><code>get_scheduled_engineering_work</code>: scheduled disruptions</p></li>
+</ul>
     
 
   </div>
@@ -157,7 +176,13 @@ current disruptions for a specific station (=unscheduled disruptions + current e
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#functions">Functions</a></li>
+          </ul>
 
   </div>
 </div>

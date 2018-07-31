@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get disruptions and engineering work — disruptions_and_maintenance • nsapi</title>
+<title>NSapi package — nsapi • nsapi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,18 @@
 
 
 
-<meta property="og:title" content="Get disruptions and engineering work — disruptions_and_maintenance" />
+<meta property="og:title" content="NSapi package — nsapi" />
 
-<meta property="og:description" content="
-current disruptions  (=unscheduled disruptions + current engineering work)
-scheduled engineering work(=scheduled engineering work)
-current disruptions for a specific station (=unscheduled disruptions + current engineering work)
-" />
+<meta property="og:description" content="Access the NS api and download current departure times,
+disruptions and engineering work, the station list, and
+travel recommendations from station to station. All results will be
+returned as a 'data.frame'.
+NS (Nederlandse Spoorwegen; Dutch Railways) is the largest train travel
+provider in the Netherlands. for more information about the API itself
+see https://www.ns.nl/en/travel-information/ns-api.
+To use the API, and this package, you will need to obtain a username
+and password. More information about authentication and the use of the functions
+are described in the vignette." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,48 +121,54 @@ current disruptions for a specific station (=unscheduled disruptions + current e
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get disruptions and engineering work</h1>
-    <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/api_calls_authentification.R'><code>R/api_calls_authentification.R</code></a></small>
-    <div class="hidden name"><code>disruptions_and_maintenance.Rd</code></div>
+    <h1>NSapi package</h1>
+    <small class="dont-index">Source: <a href='https://github.com/RMHogervorst/nsapi/blob/master/R/nsapi-package.R'><code>R/nsapi-package.R</code></a></small>
+    <div class="hidden name"><code>nsapi.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <ul>
-<li><p>current disruptions  (=unscheduled disruptions + current engineering work)</p></li>
-<li><p>scheduled engineering work(=scheduled engineering work)</p></li>
-<li><p>current disruptions for a specific station (=unscheduled disruptions + current engineering work)</p></li>
-</ul>
+    <p>Access the NS api and download current departure times,
+disruptions and engineering work, the station list, and
+travel recommendations from station to station. All results will be
+returned as a 'data.frame'.
+NS (Nederlandse Spoorwegen; Dutch Railways) is the largest train travel
+provider in the Netherlands. for more information about the API itself
+see <a href='https://www.ns.nl/en/travel-information/ns-api'>https://www.ns.nl/en/travel-information/ns-api</a>.
+To use the API, and this package, you will need to obtain a username
+and password. More information about authentication and the use of the functions
+are described in the vignette.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>disruptions_and_maintenance</span>(<span class='kw'>station</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>actual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>unplanned</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>station</th>
-      <td><p>station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN</p></td>
-    </tr>
-    <tr>
-      <th>actual</th>
-      <td><p>TRUE or FALSE indicator of the current disruptions must be returned This includes both unscheduled disruptions at the moment of the request, as well as engineering work scheduled to take place within two hours of the request.</p></td>
-    </tr>
-    <tr>
-      <th>unplanned</th>
-      <td><p>TRUE or FALSE indicator of the scheduled engineering work for the next two weeks must be returned.</p></td>
-    </tr>
-    </table>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Implemented functions:</p><ul>
+<li><p>Get travel advise between two stations <code><a href='get_travel_advise.html'>get_travel_advise</a></code>.</p></li>
+<li><p>Get departures from a particular station  <code><a href='get_departures.html'>get_departures</a></code>.</p></li>
+<li><p>All the stations <code><a href='get_stationlist.html'>get_stationlist</a></code>.</p></li>
+<li><p>Get all current disruptions <code><a href='get_disruptions_station.html'>get_current_disruptions</a></code>.</p></li>
+<li><p>Get all scheduled engineering in next two weeks <code><a href='get_disruptions_station.html'>get_scheduled_engineering_work</a></code>.</p></li>
+<li><p>Get all (un-)scheduled disruptions <code><a href='get_disruptions_station.html'>get_disruptions_station</a></code>.</p></li>
+<li><p>Find out if you have configured the API keys correct <code><a href='check_ns_api_keys.html'>check_ns_api_keys</a></code>.</p></li>
+<li><p>A small helper function to create datetimestamp <code><a href='datetime.html'>datetime</a></code>.</p></li>
+</ul>
+    <p>Image use:
+I have combined several images from the Noun project:</p><ul>
+<li><p>hands on circle: 		Data by Gregor Cresnar from the Noun Project:</p></li>
+<li><p>train: 				railway by BomSymbols from the Noun Project</p></li>
+<li><p>laptop				Laptop by abdul karim from the Noun Project</p></li>
+</ul>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

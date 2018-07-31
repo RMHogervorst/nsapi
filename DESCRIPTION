@@ -1,7 +1,16 @@
 Package: nsapi
 Version: 0.0.0.9000
 Title: Connect to the NS (Dutch Railways) api
-Description: Something
+Description: Access the NS api and download current departure times, 
+    disruptions and engineering work, the station list, and
+    travel recommendations from station to station. All results will be 
+    returned as a 'data.frame'. 
+    NS (Nederlandse Spoorwegen; Dutch Railways) is the largest train travel
+    provider in the Netherlands. for more information about the API itself
+    see <https://www.ns.nl/en/travel-information/ns-api>.
+    To use the API, and this package, you will need to obtain a username
+    and password. More information about authentication and the use of the functions
+    are described in the vignette. 
 Authors@R: person("Roel M.", "Hogervorst", email ="hogervorst.rm@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0001-7509-0328"))
 License: MIT + file LICENSE
 Encoding: UTF-8
