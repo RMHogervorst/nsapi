@@ -5,10 +5,11 @@ sudo: false
 cache: packages
 dist: trusty
 r_check_args: "--as-cran --no-build-vignettes"
+
 addons:
   apt:
     packages:
-- libxml2-dev
+      - libxml2-dev
 
 matrix:
   include:
@@ -19,4 +20,3 @@ matrix:
       env: R_CODECOV=true
     - os: linux
       r: devel
-
