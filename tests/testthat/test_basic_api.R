@@ -1,11 +1,13 @@
 context("password and username")
 
 test_that("user and password are set", {
+  skip_on_cran()
   expect_false(is.na(Sys.getenv("NSAPIACCOUNT", unset = NA)))
   expect_false(is.na(Sys.getenv("NSAPIPW", unset = NA)))
 })
 
 test_that("passwordchecker is telling us something", {
+  skip_on_cran()
   expect_message(check_ns_api_keys(), regexp = "username is set")
 })
 
@@ -26,6 +28,7 @@ test_that("utility functions are working", {
 context("travel_advise")
 
 test_that("arguments of travel_advise are tested correctly", {
+  skip_on_cran()
   expect_error(get_travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal", departure = NA, yearCard = TRUE), regexp = "departure and yearCard can only be TRUE or FALSE")
   expect_error(get_travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal", departure = TRUE, yearCard = 1), regexp = "departure and yearCard can only be TRUE or FALSE")
   expect_error(get_travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal", departure = TRUE, yearCard = TRUE, previousAdvises = "alpha"), regexp = "need to be numeric")
@@ -36,6 +39,7 @@ test_that("arguments of travel_advise are tested correctly", {
 })
 
 test_that("travel_advise returns proper values", {
+  skip_on_cran()
   advise_today <- get_travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal", departure = TRUE, yearCard = TRUE, previousAdvises = 1, nextAdvises = 1)
   expect_true(is.data.frame(advise_today))
 })
@@ -113,6 +117,7 @@ test_that("parsing of disruptions works", {
 })
 
 test_that("disruptions call functions",{
+  skip_on_cran()
   expect_error(disruptions_and_maintenance(actual = FALSE,unplanned = FALSE))
   expect_match(class(get_current_disruptions()),"data.frame")
   expect_match(class(get_scheduled_engineering_work()),"data.frame")

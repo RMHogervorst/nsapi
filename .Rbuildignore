@@ -7,3 +7,5 @@
 ^docs$
 ^README_cache$
 ^THANKS\.md$
+^cran-comments\.md$
+^\.travis\.yml$

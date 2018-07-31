@@ -1,5 +1,5 @@
 Package: nsapi
-Version: 0.0.0.9000
+Version: 0.1.0
 Title: Connect to the NS (Dutch Railways) api
 Description: Access the NS api and download current departure times, 
     disruptions and engineering work, the station list, and

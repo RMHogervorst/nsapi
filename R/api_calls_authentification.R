@@ -29,7 +29,8 @@ check_ns_api_keys <- function() {
 # call api
 
 
-nsapi_client <- crul::HttpClient$new(
+nsapi_client <- function(){
+  crul::HttpClient$new(
   url = "webservices.ns.nl",
   auth = crul::auth(
     user = Sys.getenv("NSAPIACCOUNT", unset = NA),
@@ -39,6 +40,7 @@ nsapi_client <- crul::HttpClient$new(
   opts = list(timeout_ms = 3000),
   headers = list(`User-Agent` = "ns_api_r_package")
 )
+}
 
 #' Translate date and time into datetime stamp to use in api call
 #'
@@ -107,6 +109,8 @@ get_travel_advise <- function(fromStation, toStation, dateTime = NULL,
   if (any(base::missing(fromStation), base::missing(toStation), is.null(fromStation), is.null(toStation))) stop("You need to supply both fromStation and toStation")
   if (!all(is.logical(departure), is.logical(yearCard), !is.na(departure), !is.na(yearCard))) stop("departure and yearCard can only be TRUE or FALSE")
   if (!all(is.numeric(previousAdvises), is.numeric(nextAdvises), length(previousAdvises) == 1, length(nextAdvises) == 1)) stop("previousAdvises and nextAdvises need to be numeric and a single number, f.i. 8.")
+
+  nsapi_client <- nsapi_client()
   response <- nsapi_client$get(
     path = "/ns-api-treinplanner",
     query = list(
@@ -136,6 +140,7 @@ get_travel_advise <- function(fromStation, toStation, dateTime = NULL,
 #' \url{https://www.ns.nl/en/travel-information/ns-api/documentation-station-list.html}
 #' @export
 get_stationlist <- function() {
+  nsapi_client <- nsapi_client()
   response <- nsapi_client$get(path = "/ns-api-stations-v2")
   list_response <- deal_with_response(response)
   parse_stations(list_response)
@@ -156,6 +161,7 @@ get_stationlist <- function() {
 #' get_departures("UT")
 #' }
 get_departures <- function(station) {
+  nsapi_client <- nsapi_client()
   response <- nsapi_client$get(path = "/ns-api-avt", query = list(station = station))
   list_response <- deal_with_response(response)
   parse_vertrekkende_treinen(list_response)
@@ -168,6 +174,7 @@ get_departures <- function(station) {
 
 
 disruptions_and_maintenance <- function(station = NULL, actual = NULL, unplanned = NULL) {
+  nsapi_client <- nsapi_client()
   response <- nsapi_client$get(
     path = "/ns-api-storingen",
     query = list(
