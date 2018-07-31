@@ -16,13 +16,18 @@ test_that("utility functions are working", {
   expect_identical(null_to_na(NULL), NA)
   expect_match(message_part(TRUE), regexp = "is set")
   expect_match(message_part(FALSE), regexp = "is NOT set")
-  expect_equal(parse_time("2012-02-27T12:51:00+0100"), as.POSIXct("2012-02-27 12:51:00 CET"))
+
 
   expect_match(datetime("2012-02-27", "12:51"), "2012-02-27T12:51")
   expect_error(datetime(date = 201354, "26587"))
   expect_error(datetime(date = "201354", 26587))
 })
 
+test_that("utility function date is working",{ # Naturally dates are messed up on other platforms.
+  skip_on_os("mac")
+  skip_on_travis()
+  expect_equal(parse_time("2012-02-27T12:51:00+0100"), as.POSIXct("2012-02-27 12:51:00 CET"))
+})
 
 
 context("travel_advise")
