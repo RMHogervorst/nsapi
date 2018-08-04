@@ -4,9 +4,9 @@
 \alias{get_travel_advise}
 \title{Get travel advise from one station to another station}
 \usage{
-get_travel_advise(fromStation, toStation, dateTime = NULL, departure = TRUE,
-  yearCard = FALSE, hslAllowed = FALSE, previousAdvises = 4,
-  nextAdvises = 4)
+get_travel_advise(fromStation, toStation, dateTime = NULL,
+  departure = TRUE, yearCard = FALSE, hslAllowed = FALSE,
+  previousAdvises = 4, nextAdvises = 4)
 }
 \arguments{
 \item{fromStation}{the station to start from, for instance "Rotterdam Centraal"}

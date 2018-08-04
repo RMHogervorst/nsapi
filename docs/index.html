@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connect to the NS (Dutch Railways) api • nsapi</title>
+<title>Connect to the NS (Dutch Railways) API • nsapi</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Connect to the NS (Dutch Railways) api">
+<script src="pkgdown.js"></script><meta property="og:title" content="Connect to the NS (Dutch Railways) API">
 <meta property="og:description" content="Access the NS api and download current departure times, 
     disruptions and engineering work, the station list, and
     travel recommendations from station to station. All results will be 
@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nsapi</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
       </span>
     </div>
 
@@ -105,44 +105,44 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can NOT YET install the released version of nsapi from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nsapi"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"nsapi"</span>)</a></code></pre></div>
 <p>But you can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"RMHogervorst/nsapi"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"RMHogervorst/nsapi"</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how you get travel information:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nsapi)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treinplanner &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_travel_advise.html">get_travel_advise</a></span>(
-  <span class="dt">fromStation =</span> <span class="st">"Leiden Centraal"</span>, 
-  <span class="dt">toStation =</span> <span class="st">"Utrecht Centraal"</span>,
-  <span class="dt">departure =</span> <span class="ot">TRUE</span>,
-  <span class="dt">yearCard =</span> <span class="ot">TRUE</span>,
-  <span class="dt">previousAdvises =</span> <span class="dv">1</span>, 
-  <span class="dt">nextAdvises =</span> <span class="dv">1</span>)
-treinplanner
-<span class="co">#&gt;   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span>
-<span class="co">#&gt; 1      NA                 0             0:42            0:42</span>
-<span class="co">#&gt; 2    NULL                 1             0:56            0:56</span>
-<span class="co">#&gt; 3      NA                 0             0:42            0:42</span>
-<span class="co">#&gt; 4      NA                 1             0:56            0:56</span>
-<span class="co">#&gt;   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd</span>
-<span class="co">#&gt; 1              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-31 11:52:00</span>
-<span class="co">#&gt; 2              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-31 11:53:00</span>
-<span class="co">#&gt; 3              &lt;NA&gt;               &lt;NA&gt;     TRUE 2018-07-31 12:22:00</span>
-<span class="co">#&gt; 4              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-07-31 12:23:00</span>
-<span class="co">#&gt;    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd</span>
-<span class="co">#&gt; 1 2018-07-31 11:52:00  2018-07-31 12:34:00 2018-07-31 12:34:00</span>
-<span class="co">#&gt; 2 2018-07-31 11:53:00  2018-07-31 12:49:00 2018-07-31 12:49:00</span>
-<span class="co">#&gt; 3 2018-07-31 12:22:00  2018-07-31 13:04:00 2018-07-31 13:04:00</span>
-<span class="co">#&gt; 4 2018-07-31 12:23:00  2018-07-31 13:19:00 2018-07-31 13:19:00</span>
-<span class="co">#&gt;          Status     ReisDeel</span>
-<span class="co">#&gt; 1  VOLGENS-PLAN NS, Inte....</span>
-<span class="co">#&gt; 2 NIET-MOGELIJK c("NS", ....</span>
-<span class="co">#&gt; 3  VOLGENS-PLAN NS, Inte....</span>
-<span class="co">#&gt; 4  VOLGENS-PLAN c("NS", ....</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(nsapi)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">treinplanner &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_travel_advise.html">get_travel_advise</a></span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">fromStation =</span> <span class="st">"Leiden Centraal"</span>, </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">toStation =</span> <span class="st">"Utrecht Centraal"</span>,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">departure =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">yearCard =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">previousAdvises =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">nextAdvises =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">treinplanner</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 1      NA                 0             0:42            0:42</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 2    NULL                 1             0:56            0:56</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; 3      NA                 0             0:42            0:42</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; 4      NA                 1             0:56            0:56</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 1              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-08-04 09:22:00</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 2              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-08-04 09:23:00</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 3              &lt;NA&gt;               &lt;NA&gt;     TRUE 2018-08-04 09:52:00</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 4              &lt;NA&gt;               &lt;NA&gt;    FALSE 2018-08-04 09:53:00</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt;    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 1 2018-08-04 09:22:00  2018-08-04 10:04:00 2018-08-04 10:04:00</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 2 2018-08-04 09:23:00  2018-08-04 10:19:00 2018-08-04 10:19:00</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 3 2018-08-04 09:52:00  2018-08-04 10:34:00 2018-08-04 10:34:00</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; 4 2018-08-04 09:53:00  2018-08-04 10:49:00 2018-08-04 10:49:00</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;          Status     ReisDeel</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; 1  VOLGENS-PLAN NS, Inte....</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; 2 NIET-MOGELIJK c("NS", ....</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; 3  VOLGENS-PLAN NS, Inte....</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; 4  VOLGENS-PLAN c("NS", ....</span></a></code></pre></div>
 </div>
 </div>
 <div id="faq" class="section level1">
@@ -176,11 +176,11 @@ treinplanner
 <h2 class="hasAnchor">
 <a href="#metadata" class="anchor"></a>Metadata</h2>
 <p>The package is MIT licensed although the information from NS is probably proprietary</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">codecoverage &lt;-<span class="st"> </span>covr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/covr/topics/package_coverage">package_coverage</a></span>(<span class="dt">path =</span> <span class="st">"."</span>,<span class="dt">type =</span> <span class="st">"tests"</span>)
-<span class="kw">print</span>(codecoverage)
-<span class="co">#&gt; nsapi Coverage: 66.31%</span>
-<span class="co">#&gt; R/api_calls_authentification.R: 53.85%</span>
-<span class="co">#&gt; R/utils.R: 69.59%</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">codecoverage &lt;-<span class="st"> </span>covr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/covr/topics/package_coverage">package_coverage</a></span>(<span class="dt">path =</span> <span class="st">"."</span>,<span class="dt">type =</span> <span class="st">"tests"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">print</span>(codecoverage)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; nsapi Coverage: 18.87%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; R/api_calls_authentification.R: 4.84%</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; R/utils.R: 24.67%</span></a></code></pre></div>
 </div>
 </div>
   </div>
@@ -217,6 +217,7 @@ treinplanner
 <li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
 <li><a href="THANKS.html"><img src="https://img.shields.io/badge/THANKS-md-ff69b4.svg" alt="thanks-md"></a></li>
 <li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+<li><a href="https://travis-ci.org/RMHogervorst/nsapi"><img src="https://travis-ci.org/RMHogervorst/nsapi.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 </ul>
 </div>
 </div>

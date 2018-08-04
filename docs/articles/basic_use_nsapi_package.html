@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nsapi</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1>Basic use of the nsapi package</h1>
                         <h4 class="author">Roel M. Hogervorst</h4>
             
-            <h4 class="date">2018-07-31</h4>
+            <h4 class="date">2018-08-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/RMHogervorst/nsapi/blob/master/vignettes/basic_use_nsapi_package.Rmd"><code>vignettes/basic_use_nsapi_package.Rmd</code></a></small>
       <div class="hidden name"><code>basic_use_nsapi_package.Rmd</code></div>
@@ -104,162 +104,156 @@
 <h2 class="hasAnchor">
 <a href="#temporary-adding-acountname-and-password-to-your-session" class="anchor"></a>Temporary adding acountname and password to your session</h2>
 <p>A temporary way is to add them to your session with :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.setenv</span>(<span class="dt">NSAPIACCOUNT =</span> <span class="st">"probablyyouremail@email.com"</span>)
-<span class="kw">Sys.setenv</span>(<span class="dt">NSAPIPW =</span> <span class="st">"yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">Sys.setenv</span>(<span class="dt">NSAPIACCOUNT =</span> <span class="st">"probablyyouremail@email.com"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">Sys.setenv</span>(<span class="dt">NSAPIPW =</span> <span class="st">"yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod"</span>)</a></code></pre></div>
 <p>At the end of your session (if you go to a new project, if you restart R or if you crash) the keys are removed from memory. Keep in mind that this DOES put your password in the history file and is therefore NOT recommended.</p>
 </div>
 <div id="permanently-adding-username-and-password-to-your-r-session" class="section level2">
 <h2 class="hasAnchor">
 <a href="#permanently-adding-username-and-password-to-your-r-session" class="anchor"></a>Permanently adding username and password to your r session</h2>
 <p>Go to your global .Renviron file (or make one) and add the keys</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.edit</span>(<span class="st">"~./.Renviron"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">file.edit</span>(<span class="st">"~./.Renviron"</span>)</a></code></pre></div>
 <p>The file will open and you can add two entries:</p>
 <pre><code>NSAPIPW = yourpasswordgiveninplaintextoveremailwhydopeopledothisohgod
 NSAPIACCOUNT = probablyyouremail@email.com</code></pre>
 <p>How do you know if you succeeded?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/check_ns_api_keys.html">check_ns_api_keys</a></span>()
-<span class="co">#&gt; Your username is set,</span>
-<span class="co">#&gt; your password is set</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/check_ns_api_keys.html">check_ns_api_keys</a></span>()</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Your username is set,</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; your password is set</span></a></code></pre></div>
 </div>
 </div>
 <div id="getting-travel-advise" class="section level1">
 <h1 class="hasAnchor">
 <a href="#getting-travel-advise" class="anchor"></a>Getting travel advise</h1>
 <p>If you’d like to know when your train from Amsterdam to Groningen goes, use the travel_advise function with departure and arrival station.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nsapi)
-ams_to_groningen &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_travel_advise.html">get_travel_advise</a></span>(
-  <span class="dt">fromStation =</span> <span class="st">"Amsterdam Centraal"</span>,
-  <span class="dt">toStation =</span> <span class="st">"Groningen"</span>,
-  <span class="co">#dateTime = , # I don't use it because I want to leave now!</span>
-  <span class="dt">departure =</span> <span class="ot">TRUE</span>  <span class="co"># I want to depart now</span>
-)
-ams_to_groningen[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
-<span class="co">#&gt;    Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span>
-<span class="co">#&gt; 1       NA                 2             2:06            2:06</span>
-<span class="co">#&gt; 2       NA                 1             2:06            2:06</span>
-<span class="co">#&gt; 3       NA                 2             2:06            2:06</span>
-<span class="co">#&gt; 4       NA                 1             2:06            2:06</span>
-<span class="co">#&gt; 5     NULL                 2             2:20            2:20</span>
-<span class="co">#&gt; 6       NA                 2             2:06            2:06</span>
-<span class="co">#&gt; 7       NA                 1             2:06            2:06</span>
-<span class="co">#&gt; 8       NA                 2             2:20            2:20</span>
-<span class="co">#&gt; 9       NA                 2             2:06            2:06</span>
-<span class="co">#&gt; 10      NA                 1             2:06            2:06</span>
-<span class="co">#&gt;    VertrekVertraging</span>
-<span class="co">#&gt; 1               &lt;NA&gt;</span>
-<span class="co">#&gt; 2               &lt;NA&gt;</span>
-<span class="co">#&gt; 3               &lt;NA&gt;</span>
-<span class="co">#&gt; 4               &lt;NA&gt;</span>
-<span class="co">#&gt; 5               &lt;NA&gt;</span>
-<span class="co">#&gt; 6               &lt;NA&gt;</span>
-<span class="co">#&gt; 7               &lt;NA&gt;</span>
-<span class="co">#&gt; 8               &lt;NA&gt;</span>
-<span class="co">#&gt; 9               &lt;NA&gt;</span>
-<span class="co">#&gt; 10              &lt;NA&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(nsapi)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">ams_to_groningen &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_travel_advise.html">get_travel_advise</a></span>(</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">fromStation =</span> <span class="st">"Amsterdam Centraal"</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="dt">toStation =</span> <span class="st">"Groningen"</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="co">#dateTime = , # I don't use it because I want to leave now!</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="dt">departure =</span> <span class="ot">TRUE</span>  <span class="co"># I want to depart now</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">ams_to_groningen[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 1      NA                 2             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 2      NA                 1             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 3      NA                 2             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 4      NA                 1             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 5      NA                 2             2:20            2:20</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 6      NA                 2             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; 7      NA                 1             2:06            2:06</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; 8      NA                 2             2:20            2:20</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;   VertrekVertraging</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt; 1              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt; 2              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt; 3              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt; 4              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; 5              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; 6              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; 7              &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt; 8              &lt;NA&gt;</span></a></code></pre></div>
 <p>The function returns a data.frame with 4 advises before and 4 after the time you selected.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen[,<span class="dv">6</span><span class="op">:</span><span class="dv">8</span>]
-<span class="co">#&gt;    AankomstVertraging Optimaal GeplandeVertrekTijd</span>
-<span class="co">#&gt; 1                &lt;NA&gt;    FALSE 2018-07-31 10:37:00</span>
-<span class="co">#&gt; 2                &lt;NA&gt;    FALSE 2018-07-31 11:07:00</span>
-<span class="co">#&gt; 3                &lt;NA&gt;    FALSE 2018-07-31 11:37:00</span>
-<span class="co">#&gt; 4                &lt;NA&gt;    FALSE 2018-07-31 12:07:00</span>
-<span class="co">#&gt; 5                &lt;NA&gt;    FALSE 2018-07-31 12:23:00</span>
-<span class="co">#&gt; 6                &lt;NA&gt;     TRUE 2018-07-31 12:37:00</span>
-<span class="co">#&gt; 7                &lt;NA&gt;    FALSE 2018-07-31 13:07:00</span>
-<span class="co">#&gt; 8                &lt;NA&gt;    FALSE 2018-07-31 13:23:00</span>
-<span class="co">#&gt; 9                &lt;NA&gt;    FALSE 2018-07-31 13:37:00</span>
-<span class="co">#&gt; 10               &lt;NA&gt;    FALSE 2018-07-31 14:07:00</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ams_to_groningen[,<span class="dv">6</span><span class="op">:</span><span class="dv">8</span>]</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt;   AankomstVertraging Optimaal GeplandeVertrekTijd</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; 1               &lt;NA&gt;    FALSE 2018-08-04 08:37:00</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 2               &lt;NA&gt;    FALSE 2018-08-04 09:07:00</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 3               &lt;NA&gt;    FALSE 2018-08-04 09:37:00</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 4               &lt;NA&gt;     TRUE 2018-08-04 10:07:00</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 5               &lt;NA&gt;    FALSE 2018-08-04 10:23:00</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 6               &lt;NA&gt;    FALSE 2018-08-04 10:37:00</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 7               &lt;NA&gt;    FALSE 2018-08-04 11:07:00</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 8               &lt;NA&gt;    FALSE 2018-08-04 11:23:00</span></a></code></pre></div>
 <div id="more-details-about-the-returned-dataframe-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#more-details-about-the-returned-dataframe-" class="anchor"></a>More details about the returned dataframe.</h2>
 <p>The column Reisdeel is a nested data frame with a nested data frame called stops within.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(ams_to_groningen[<span class="dv">1</span>,<span class="dv">13</span>])
-<span class="co">#&gt; List of 1</span>
-<span class="co">#&gt;  $ :'data.frame':    3 obs. of  5 variables:</span>
-<span class="co">#&gt;   ..$ Vervoerder : chr [1:3] "NS" "NS" "NS"</span>
-<span class="co">#&gt;   ..$ VervoerType: chr [1:3] "Intercity" "Intercity" "Intercity"</span>
-<span class="co">#&gt;   ..$ RitNummer  : chr [1:3] "2635" "1835" "535"</span>
-<span class="co">#&gt;   ..$ Status     : chr [1:3] "VOLGENS-PLAN" "VERTRAAGD" "VERTRAAGD"</span>
-<span class="co">#&gt;   ..$ Stops      :List of 3</span>
-<span class="co">#&gt;   .. ..$ :'data.frame':  2 obs. of  4 variables:</span>
-<span class="co">#&gt;   .. .. ..$ Naam          : chr [1:2] "Amsterdam Centraal" "Almere Centrum"</span>
-<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:2], format: "2018-07-31 10:37:00" ...</span>
-<span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:2] "13b" "3"</span>
-<span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:2] NA NA</span>
-<span class="co">#&gt;   .. ..$ :'data.frame':  3 obs. of  4 variables:</span>
-<span class="co">#&gt;   .. .. ..$ Naam          : chr [1:3] "Almere Centrum" "Lelystad Centrum" "Zwolle"</span>
-<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:3], format: "2018-07-31 11:03:00" ...</span>
-<span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:3] "4" NA "7"</span>
-<span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:3] NA NA NA</span>
-<span class="co">#&gt;   .. ..$ :'data.frame':  3 obs. of  4 variables:</span>
-<span class="co">#&gt;   .. .. ..$ Naam          : chr [1:3] "Zwolle" "Assen" "Groningen"</span>
-<span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:3], format: "2018-07-31 11:45:00" ...</span>
-<span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:3] "6" NA "2b"</span>
-<span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:3] NA NA NA</span>
-<span class="co">#&gt;  - attr(*, "class")= chr "AsIs"</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">str</span>(ams_to_groningen[<span class="dv">1</span>,<span class="dv">13</span>])</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; List of 1</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  $ :'data.frame':    3 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;   ..$ Vervoerder : chr [1:3] "NS" "NS" "NS"</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;   ..$ VervoerType: chr [1:3] "Intercity" "Intercity" "Intercity"</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;   ..$ RitNummer  : chr [1:3] "2627" "1827" "527"</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;   ..$ Status     : chr [1:3] "VOLGENS-PLAN" "VOLGENS-PLAN" "VOLGENS-PLAN"</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;   ..$ Stops      :List of 3</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;   .. ..$ :'data.frame':  2 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;   .. .. ..$ Naam          : chr [1:2] "Amsterdam Centraal" "Almere Centrum"</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:2], format: "2018-08-04 08:37:00" ...</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:2] "13b" "3"</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:2] NA NA</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;   .. ..$ :'data.frame':  3 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;   .. .. ..$ Naam          : chr [1:3] "Almere Centrum" "Lelystad Centrum" "Zwolle"</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:3], format: "2018-08-04 09:03:00" ...</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:3] "4" NA "7"</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:3] NA NA NA</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;   .. ..$ :'data.frame':  3 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;   .. .. ..$ Naam          : chr [1:3] "Zwolle" "Assen" "Groningen"</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt;   .. .. ..$ Tijd          : POSIXct[1:3], format: "2018-08-04 09:45:00" ...</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt;   .. .. ..$ Spoor         : chr [1:3] "6" NA "4b"</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt;   .. .. ..$ SpoorWijziging: chr [1:3] NA NA NA</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt;  - attr(*, "class")= chr "AsIs"</span></a></code></pre></div>
 <p>The API returns a lot of nested information, and as a consequence the data.frame is nested too.</p>
 <p>Every row is thus an advise with arrival and departure times and travelparts, if you have to switch trains there will be more than 1 row in the ReisDeel column. For instance in the first row:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]
-<span class="co">#&gt;   Vervoerder VervoerType RitNummer       Status</span>
-<span class="co">#&gt; 1         NS   Intercity      2635 VOLGENS-PLAN</span>
-<span class="co">#&gt; 2         NS   Intercity      1835    VERTRAAGD</span>
-<span class="co">#&gt; 3         NS   Intercity       535    VERTRAAGD</span>
-<span class="co">#&gt;                                                                                                Stops</span>
-<span class="co">#&gt; 1                         Amsterdam Centraal, Almere Centrum, 1533026220, 1533027480, 13b, 3, NA, NA</span>
-<span class="co">#&gt; 2 Almere Centrum, Lelystad Centrum, Zwolle, 1533027780, 1533028620, 1533030180, 4, NA, 7, NA, NA, NA</span>
-<span class="co">#&gt; 3                Zwolle, Assen, Groningen, 1533030300, 1533032760, 1533033780, 6, NA, 2b, NA, NA, NA</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   Vervoerder VervoerType RitNummer       Status</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; 1         NS   Intercity      2627 VOLGENS-PLAN</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 2         NS   Intercity      1827 VOLGENS-PLAN</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 3         NS   Intercity       527 VOLGENS-PLAN</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;                                                                                                Stops</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 1                         Amsterdam Centraal, Almere Centrum, 1533364620, 1533365880, 13b, 3, NA, NA</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; 2 Almere Centrum, Lelystad Centrum, Zwolle, 1533366180, 1533367020, 1533368580, 4, NA, 7, NA, NA, NA</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 3                Zwolle, Assen, Groningen, 1533368700, 1533371160, 1533372180, 6, NA, 4b, NA, NA, NA</span></a></code></pre></div>
 <p>And every part of the trip has stops where the train stops:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]<span class="op">$</span>Stops[[<span class="dv">2</span>]]
-<span class="co">#&gt;               Naam                Tijd Spoor SpoorWijziging</span>
-<span class="co">#&gt; 1   Almere Centrum 2018-07-31 11:03:00     4           &lt;NA&gt;</span>
-<span class="co">#&gt; 2 Lelystad Centrum 2018-07-31 11:17:00  &lt;NA&gt;           &lt;NA&gt;</span>
-<span class="co">#&gt; 3           Zwolle 2018-07-31 11:43:00     7           &lt;NA&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ams_to_groningen<span class="op">$</span>ReisDeel[[<span class="dv">1</span>]]<span class="op">$</span>Stops[[<span class="dv">2</span>]]</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt;               Naam                Tijd Spoor SpoorWijziging</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; 1   Almere Centrum 2018-08-04 09:03:00     4           &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; 2 Lelystad Centrum 2018-08-04 09:17:00  &lt;NA&gt;           &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 3           Zwolle 2018-08-04 09:43:00     7           &lt;NA&gt;</span></a></code></pre></div>
 </div>
 </div>
 <div id="stationlist" class="section level1">
 <h1 class="hasAnchor">
 <a href="#stationlist" class="anchor"></a>Stationlist</h1>
 <p>Another endpoint of the API is a list of stations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_stationlist.html">get_stationlist</a></span>()
-<span class="kw">head</span>(stations)
-<span class="co">#&gt;   Code                      Type        Namen Land UICCode      Lat</span>
-<span class="co">#&gt; 1   HT knooppuntIntercitystation list("De....   NL 8400319 51.69048</span>
-<span class="co">#&gt; 2  HTO          stoptreinstation list("Dn....   NL 8400320 51.70055</span>
-<span class="co">#&gt; 3  HDE          stoptreinstation list("'t....   NL 8400388 52.40917</span>
-<span class="co">#&gt; 4 AHBF knooppuntIntercitystation list("Aa....    D 8015345 50.76780</span>
-<span class="co">#&gt; 5  ATN          stoptreinstation list("Aa....   NL 8400045 51.92133</span>
-<span class="co">#&gt; 6   AC          stoptreinstation list("Ab....   NL 8400047 52.27850</span>
-<span class="co">#&gt;        Lon   Synoniemen</span>
-<span class="co">#&gt; 1 5.293620 list("He....</span>
-<span class="co">#&gt; 2 5.318333 list("He....</span>
-<span class="co">#&gt; 3 5.893611 list("Ha....</span>
-<span class="co">#&gt; 4 6.091499           NA</span>
-<span class="co">#&gt; 5 6.578627           NA</span>
-<span class="co">#&gt; 6 4.977000           NA</span>
-<span class="kw">names</span>(stations)
-<span class="co">#&gt; [1] "Code"       "Type"       "Namen"      "Land"       "UICCode"   </span>
-<span class="co">#&gt; [6] "Lat"        "Lon"        "Synoniemen"</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_stationlist.html">get_stationlist</a></span>()</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">head</span>(stations)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;   Code                      Type        Namen Land UICCode      Lat</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; 1   HT knooppuntIntercitystation list("De....   NL 8400319 51.69048</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; 2  HTO          stoptreinstation list("Dn....   NL 8400320 51.70055</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; 3  HDE          stoptreinstation list("'t....   NL 8400388 52.40917</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; 4 AHBF knooppuntIntercitystation list("Aa....    D 8015345 50.76780</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; 5  ATN          stoptreinstation list("Aa....   NL 8400045 51.92133</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; 6   AC          stoptreinstation list("Ab....   NL 8400047 52.27850</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;        Lon   Synoniemen</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; 1 5.293620 list("He....</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; 2 5.318333 list("He....</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; 3 5.893611 list("Ha....</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; 4 6.091499           NA</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; 5 6.578627           NA</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt; 6 4.977000           NA</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="kw">names</span>(stations)</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; [1] "Code"       "Type"       "Namen"      "Land"       "UICCode"   </span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; [6] "Lat"        "Lon"        "Synoniemen"</span></a></code></pre></div>
 <p>This will return a data frame with all the stations in the NS API. There are not only Dutch stations, but also multiple Belgian, German, English, Austrian, French,Polish and other country stations. Every station has an international code, name, synonyms, geolocation (Lat, Lon), and type of station.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># code is not executed, I don't want to add these dependencies to the package</span>
-<span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(ggrepel)
-stations &lt;-<span class="st"> </span>
-<span class="st">  </span>get_stations <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Naam =</span> <span class="kw">map_chr</span>(Namen, <span class="op">~</span>.[[<span class="st">"Kort"</span>]][[<span class="dv">1</span>]]),
-  <span class="dt">Label =</span> <span class="kw">ifelse</span>(Type <span class="op">==</span><span class="st"> "knooppuntIntercitystation"</span>, Naam,<span class="ot">NA</span>) ) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">as.tibble</span>() 
-
-stations <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(Land <span class="op">==</span><span class="st"> "NL"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Lon, Lat, <span class="dt">label =</span> Label))<span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_map</span>()<span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(
-    <span class="dt">title =</span> <span class="st">"Only Dutch Stations"</span>,
-    <span class="dt">subtitle =</span> <span class="st">"Major stations named"</span>,
-    <span class="dt">caption =</span> <span class="st">"Data: NS 2018 (Dutch National Railways)"</span>
-  )</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># code is not executed, I don't want to add these dependencies to the package</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">stations &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">get_stations</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Naam =</span> <span class="kw">map_chr</span>(Namen, <span class="op">~</span>.[[<span class="st">"Kort"</span>]][[<span class="dv">1</span>]]),</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  <span class="dt">Label =</span> <span class="kw">ifelse</span>(Type <span class="op">==</span><span class="st"> "knooppuntIntercitystation"</span>, Naam,<span class="ot">NA</span>) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw">as.tibble</span>() </a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">stations <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="st">  </span><span class="kw">filter</span>(Land <span class="op">==</span><span class="st"> "NL"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Lon, Lat, <span class="dt">label =</span> Label))<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="st">  </span><span class="kw">coord_map</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb11-17" data-line-number="17">    <span class="dt">title =</span> <span class="st">"Only Dutch Stations"</span>,</a>
+<a class="sourceLine" id="cb11-18" data-line-number="18">    <span class="dt">subtitle =</span> <span class="st">"Major stations named"</span>,</a>
+<a class="sourceLine" id="cb11-19" data-line-number="19">    <span class="dt">caption =</span> <span class="st">"Data: NS 2018 (Dutch National Railways)"</span></a>
+<a class="sourceLine" id="cb11-20" data-line-number="20">  )</a></code></pre></div>
 <div class="figure">
 <img src="../man/figures/Dutch_stations.png" alt="Plot of Dutch stations’ locations"><p class="caption">Plot of Dutch stations’ locations</p>
 </div>
@@ -268,22 +262,22 @@ stations <span class="op">%&gt;%</span><span class="st"> </span>
 <h1 class="hasAnchor">
 <a href="#departures" class="anchor"></a>Departures</h1>
 <p>You can see the departure times of any station at this time by calling the <code>departures()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">leiden_trains &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_departures.html">get_departures</a></span>(<span class="dt">station =</span> <span class="st">"Leiden Lammenschans"</span>)
-<span class="kw">head</span>(leiden_trains)
-<span class="co">#&gt;   RitNummer         VertrekTijd   EindBestemming TreinSoort</span>
-<span class="co">#&gt; 1           2018-07-31 12:27:00 Utrecht Centraal  Intercity</span>
-<span class="co">#&gt; 2           2018-07-31 12:32:00  Leiden Centraal  Intercity</span>
-<span class="co">#&gt; 3           2018-07-31 12:57:00 Utrecht Centraal  Intercity</span>
-<span class="co">#&gt; 4           2018-07-31 13:02:00  Leiden Centraal  Intercity</span>
-<span class="co">#&gt; 5           2018-07-31 13:27:00 Utrecht Centraal  Intercity</span>
-<span class="co">#&gt; 6           2018-07-31 13:32:00  Leiden Centraal  Intercity</span>
-<span class="co">#&gt;        RouteTekst Vervoerder VertrekSpoor Spoorwijziging</span>
-<span class="co">#&gt; 1 Alphen a/d Rijn                       1               </span>
-<span class="co">#&gt; 2            &lt;NA&gt;                       1               </span>
-<span class="co">#&gt; 3 Alphen a/d Rijn                       1               </span>
-<span class="co">#&gt; 4            &lt;NA&gt;                       1               </span>
-<span class="co">#&gt; 5 Alphen a/d Rijn                       1               </span>
-<span class="co">#&gt; 6            &lt;NA&gt;                       1</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">leiden_trains &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_departures.html">get_departures</a></span>(<span class="dt">station =</span> <span class="st">"Leiden Lammenschans"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">head</span>(leiden_trains)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt;   RitNummer         VertrekTijd   EindBestemming TreinSoort</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; 1           2018-08-04 09:57:00 Utrecht Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; 2           2018-08-04 10:02:00  Leiden Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; 3           2018-08-04 10:27:00 Utrecht Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; 4           2018-08-04 10:32:00  Leiden Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; 5           2018-08-04 10:57:00 Utrecht Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; 6           2018-08-04 11:02:00  Leiden Centraal  Intercity</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;        RouteTekst Vervoerder VertrekSpoor Spoorwijziging</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; 1 Alphen a/d Rijn                       1               </span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; 2            &lt;NA&gt;                       1               </span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 3 Alphen a/d Rijn                       1               </span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; 4            &lt;NA&gt;                       1               </span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; 5 Alphen a/d Rijn                       1               </span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; 6            &lt;NA&gt;                       1</span></a></code></pre></div>
 </div>
 <div id="disruptions-and-maintenance" class="section level1">
 <h1 class="hasAnchor">
@@ -295,42 +289,42 @@ stations <span class="op">%&gt;%</span><span class="st"> </span>
 <h2 class="hasAnchor">
 <a href="#current-disruptions-unscheduled-disruptions-current-engineering-work" class="anchor"></a>Current disruptions (=unscheduled disruptions + current engineering work)</h2>
 <p>Showing only columns Traject and Periode:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">current &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_disruptions_station.html">get_current_disruptions</a></span>()
-current[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">"Traject"</span>, <span class="st">"Periode"</span>)] <span class="co"># I'll show a sample of the responses</span>
-<span class="co">#&gt;                             Traject</span>
-<span class="co">#&gt; 1     Roosendaal-Antwerpen C.-Puurs</span>
-<span class="co">#&gt; 2 Leiden Centraal-Den Haag Centraal</span>
-<span class="co">#&gt;                                                                 Periode</span>
-<span class="co">#&gt; 1                                                vanaf zaterdag 26 mei </span>
-<span class="co">#&gt; 2 maandag 30 juli tot en met vrijdag 3 augustus dagelijks tot 20.10 uur</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">current &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_disruptions_station.html">get_current_disruptions</a></span>()</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">current[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">"Traject"</span>, <span class="st">"Periode"</span>)] <span class="co"># I'll show a sample of the responses</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt;                         Traject</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; 1 Roosendaal-Antwerpen C.-Puurs</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; 2  Rotterdam Centraal-Dordrecht</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;                                                    Periode</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; 1                                   vanaf zaterdag 26 mei </span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; 2 maandag 30 juli tot en met maandag 6 augustus 00.40 uur</span></a></code></pre></div>
 </div>
 <div id="scheduled-engineering-workscheduled-engineering-work" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scheduled-engineering-workscheduled-engineering-work" class="anchor"></a>Scheduled engineering work(=scheduled engineering work)</h2>
 <p>This call returns scheduled engineering work for the next 2 weeks.</p>
 <p>example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_disruptions_station.html">get_scheduled_engineering_work</a></span>()
-sched[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>,<span class="kw">c</span>(<span class="st">"Traject"</span>,<span class="st">"Periode"</span>, <span class="st">"Advies"</span>)]
-<span class="co">#&gt;                             Traject</span>
-<span class="co">#&gt; 2 Leiden Centraal-Den Haag Centraal</span>
-<span class="co">#&gt; 3      Rotterdam Centraal-Dordrecht</span>
-<span class="co">#&gt; 4             Alphen a/d Rijn-Gouda</span>
-<span class="co">#&gt;                                                                 Periode</span>
-<span class="co">#&gt; 2 maandag 30 juli tot en met vrijdag 3 augustus dagelijks tot 20.10 uur</span>
-<span class="co">#&gt; 3              maandag 30 juli tot en met maandag 6 augustus 00.40 uur </span>
-<span class="co">#&gt; 4                         maandag 30 juli tot en met maandag 6 augustus</span>
-<span class="co">#&gt;               Advies</span>
-<span class="co">#&gt; 2 Raadpleeg Internet</span>
-<span class="co">#&gt; 3 Raadpleeg Internet</span>
-<span class="co">#&gt; 4 Raadpleeg Internet</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">sched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_disruptions_station.html">get_scheduled_engineering_work</a></span>()</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">sched[<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>,<span class="kw">c</span>(<span class="st">"Traject"</span>,<span class="st">"Periode"</span>, <span class="st">"Advies"</span>)]</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;                                                         Traject</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 2                                  Rotterdam Centraal-Dordrecht</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 3                                         Alphen a/d Rijn-Gouda</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 4 Rotterdam Centraal/Den Haag Centraal-Woerden-Utrecht Centraal</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;                                                    Periode</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; 2 maandag 30 juli tot en met maandag 6 augustus 00.40 uur </span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; 3            maandag 30 juli tot en met maandag 6 augustus</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; 4            maandag 30 juli tot en met maandag 6 augustus</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;               Advies</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; 2 Raadpleeg Internet</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; 3 Raadpleeg Internet</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; 4 Raadpleeg Internet</span></a></code></pre></div>
 </div>
 <div id="current-disruptions-for-a-specific-station-unscheduled-disruptions-current-engineering-work" class="section level2">
 <h2 class="hasAnchor">
 <a href="#current-disruptions-for-a-specific-station-unscheduled-disruptions-current-engineering-work" class="anchor"></a>Current disruptions for a specific station (=unscheduled disruptions + current engineering work)</h2>
 <p>Showing only first 2 messages:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/get_disruptions_station.html">get_disruptions_station</a></span>(<span class="dt">station =</span> <span class="st">"Rotterdam Centraal"</span>)<span class="op">$</span>Bericht[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
-<span class="co">#&gt; [1] "&lt;p&gt;\n&lt;b&gt;Wanneer: vanaf zaterdag 26 mei &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: aangepaste dienstregeling&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n&lt;br/&gt; plan uw reis in de Internationale Reisplanner\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;"</span>
-<span class="co">#&gt; [2] "&lt;p&gt;\n&lt;b&gt;Wanneer: maandag 30 juli tot en met vrijdag 3 augustus dagelijks tot 20.10 uur&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;de dienstregeling van de Sprinters is aangepast tussen Leiden Centraal en Den Haag Centraal\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: geen extra reistijd&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;"</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="../reference/get_disruptions_station.html">get_disruptions_station</a></span>(<span class="dt">station =</span> <span class="st">"Rotterdam Centraal"</span>)<span class="op">$</span>Bericht[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; [1] "&lt;p&gt;\n&lt;b&gt;Wanneer: vanaf zaterdag 26 mei &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: aangepaste dienstregeling&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;Stoptreinen tussen Roosendaal en Antwerpen Centraal/Puurs rijden in een aangepaste dienstregeling; reizigers dienen in Essen (B) over te stappen op een andere trein\n&lt;br/&gt; plan uw reis in de Internationale Reisplanner\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: een kwartier tot een half uur&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;"</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt; [2] "&lt;p&gt;\n&lt;b&gt;Wanneer: maandag 30 juli tot en met maandag 6 augustus 00.40 uur &lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Oorzaak: werkzaamheden&lt;/b&gt;&lt;br/&gt;\n&lt;b&gt;Advies: U kunt gebruikmaken van de gewijzigde dienstregeling&lt;/b&gt;\n&lt;br/&gt;de dienstregeling is aangepast tussen Rotterdam Centraal en Dordrecht\n&lt;br/&gt; &lt;br/&gt;\n  &lt;b&gt;Extra reistijd: geen extra reistijd&lt;/b&gt;&lt;br/&gt;\n&lt;/p&gt;"</span></a></code></pre></div>
 </div>
 </div>
   </div>
