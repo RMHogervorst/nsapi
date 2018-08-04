@@ -77,26 +77,26 @@ use the travel_advise function with departure and arrival station.
 
 ```{r, eval=NOT_CRAN}
 library(nsapi)
-ams_to_groningen <- get_travel_advise(
+ams_to_ut <- get_travel_advise(
   fromStation = "Amsterdam Centraal",
-  toStation = "Groningen",
+  toStation = "Utrecht Centraal",
   #dateTime = , # I don't use it because I want to leave now!
   departure = TRUE  # I want to depart now
 )
-ams_to_groningen[,1:5]
+ams_to_ut[,1:5]
 ```
 
 The function returns a data.frame with 4 advises before and 4 after the time you selected.
 
 ```{r, eval=NOT_CRAN}
-ams_to_groningen[,6:8]
+ams_to_ut[,6:8]
 ```
 
 ## More details about the returned dataframe.
 The column Reisdeel is a nested data frame with a nested data frame called stops within. 
 
 ```{r, eval=NOT_CRAN}
-str(ams_to_groningen[1,13])
+str(ams_to_ut[1,13])
 ```
  The API returns a lot of nested information, and as a consequence the data.frame is nested too.
 
@@ -105,13 +105,13 @@ if you have to switch trains there will be more than 1 row in the ReisDeel colum
 For instance in the first row:
 
 ```{r, eval=NOT_CRAN}
-ams_to_groningen$ReisDeel[[1]]
+ams_to_ut$ReisDeel[[1]]
 ```
 
 And every part of the trip has stops where the train stops:
 
 ```{r, eval=NOT_CRAN}
-ams_to_groningen$ReisDeel[[1]]$Stops[[2]]
+ams_to_ut$ReisDeel[[1]]$Stops[[1]]
 ```
 
 # Stationlist
@@ -183,6 +183,7 @@ Showing only columns Traject and Periode:
 current <- get_current_disruptions()
 current[1:2, c("Traject", "Periode")] # I'll show a sample of the responses
 ```
+
 ## Scheduled engineering work(=scheduled engineering work) 
 This call returns scheduled engineering work for the next 2 weeks.
 
