@@ -9,3 +9,4 @@
 ^THANKS\.md$
 ^cran-comments\.md$
 ^\.travis\.yml$
+^testingscripts\.R$

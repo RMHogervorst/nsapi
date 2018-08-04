@@ -34,7 +34,7 @@ parse_reismogelijkheden <- function(reizen) {
     stringsAsFactors = FALSE
   )
   # fill the frame
-  for (i in seq_along(reizen)) {
+  for (i in seq_len(l_df)) {
     holdingframe$Melding[[i]] <- null_to_na(reizen[[i]]$Melding[[1]])
     holdingframe$AantalOverstappen[[i]] <- as.integer(reizen[[i]]$AantalOverstappen[[1]])
     holdingframe$GeplandeReisTijd[[i]] <- reizen[[i]]$GeplandeReisTijd[[1]]

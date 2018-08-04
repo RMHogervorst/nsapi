@@ -1,6 +1,6 @@
 Package: nsapi
 Version: 0.1.0
-Title: Connect to the NS (Dutch Railways) api
+Title: Connect to the NS (Dutch Railways) API
 Description: Access the NS api and download current departure times, 
     disruptions and engineering work, the station list, and
     travel recommendations from station to station. All results will be 
@@ -19,7 +19,7 @@ ByteCompile: true
 URL: https://github.com/RMHogervorst/nsapi , https://rmhogervorst.nl/nsapi/
 BugReports: https://github.com/RMHogervorst/nsapi/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: 
     testthat,
     knitr,
