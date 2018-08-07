@@ -8,7 +8,7 @@ message_part <- function(thing) {
 }
 
 parse_time <- function(value) {
-  as.POSIXct(value, format = "%Y-%m-%dT%H:%M:%S%z")
+  as.POSIXct(value, format = "%Y-%m-%dT%H:%M:%S%z",tz="Europe/Amsterdam")
 }
 
 

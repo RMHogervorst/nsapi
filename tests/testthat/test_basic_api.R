@@ -24,9 +24,7 @@ test_that("utility functions are working", {
 })
 
 test_that("utility function date is working",{ # Naturally dates are messed up on other platforms.
-  skip_on_os("mac")
-  skip_on_travis()
-  expect_equal(parse_time("2012-02-27T12:51:00+0100"), as.POSIXct("2012-02-27 12:51:00 CET"))
+  expect_equal(parse_time("2012-02-27T12:51:00+0100"), as.POSIXct("2012-02-27 12:51:00", tz = "Europe/Amsterdam"))
 })
 
 
