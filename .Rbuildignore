@@ -10,3 +10,4 @@
 ^cran-comments\.md$
 ^\.travis\.yml$
 ^testingscripts\.R$
+^codecov\.yml$
