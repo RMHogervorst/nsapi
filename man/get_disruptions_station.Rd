@@ -16,7 +16,7 @@ get_scheduled_engineering_work()
 \item{station}{optional, station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN}
 }
 \value{
-a dataframe
+a dataframe with disruptions. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 }
 \description{
 These 3 functions call out to find out about disruptions and engineering on

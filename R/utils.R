@@ -7,10 +7,12 @@ message_part <- function(thing) {
   ifelse(thing, " is set", " is NOT set")
 }
 
+# whatever the API documentation says, they return the time in
+# timezone Europe/Amsterdam with a offset from UTC.
+# That means we can ignore the offset and parse with timezone Europe/Amsterdam.
 parse_time <- function(value) {
-  as.POSIXct(value, format = "%Y-%m-%dT%H:%M:%S%z",tz="Europe/Amsterdam")
+  as.POSIXct(value, format = "%Y-%m-%dT%H:%M:%S",tz="Europe/Amsterdam")
 }
-
 
 
 

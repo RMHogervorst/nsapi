@@ -23,7 +23,8 @@ test_that("utility functions are working", {
   expect_error(datetime(date = "201354", 26587))
 })
 
-test_that("utility function date is working",{ # Naturally dates are messed up on other platforms.
+test_that("utility function date is working",{
+  # date time stamp is current time in the netherlands time zone.
   expect_equal(parse_time("2012-02-27T12:51:00+0100"), as.POSIXct("2012-02-27 12:51:00", tz = "Europe/Amsterdam"))
 })
 

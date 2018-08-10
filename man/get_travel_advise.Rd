@@ -13,7 +13,7 @@ get_travel_advise(fromStation, toStation, dateTime = NULL,
 
 \item{toStation}{the station to end, for instance "Utrecht Centraal"}
 
-\item{dateTime}{defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the \code{datetime()} function}
+\item{dateTime}{defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the \code{datetime()} function.}
 
 \item{departure}{is the datetime the start or end time? do you want to depart on that date or arrive, defaults to departure}
 
@@ -24,6 +24,9 @@ get_travel_advise(fromStation, toStation, dateTime = NULL,
 \item{previousAdvises}{how many advices do you want before the time}
 
 \item{nextAdvises}{how many advises do you want after}
+}
+\value{
+A dataframe with travel advises around your chosen date time. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 }
 \description{
 This is equivalent to the \href{https://www.ns.nl/reisplanner#/}{NS reisplanner},

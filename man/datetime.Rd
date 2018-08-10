@@ -16,6 +16,10 @@ The datetime stamp format might be a bit difficult to use. This
 helper function allows you to supply the date and time and a datetime
 character string comes out.
 }
+\details{
+For example if it is 21-08-2018, 15.21 hour in the Netherlands than you can
+add these two items into the function.
+}
 \examples{
 \dontrun{
 get_travel_advise(

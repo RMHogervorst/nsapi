@@ -10,7 +10,9 @@ get_departures(station)
 \item{station}{station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN}
 }
 \value{
-a dataframe
+a dataframe with date time formatted as time in "Europe/Amsterdam" timezone.
+
+a dataframe with departure times at this moment on the station you chose. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 }
 \description{
 Shows up to date departure times for a station. Displays all departing

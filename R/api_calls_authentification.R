@@ -48,6 +48,8 @@ nsapi_client <- function(){
 #' helper function allows you to supply the date and time and a datetime
 #' character string comes out.
 #'
+#' For example if it is 21-08-2018, 15.21 hour in the Netherlands than you can
+#' add these two items into the function.
 #'
 #' @param date date in iso format (year-month-day): 2018-12-29 for example
 #' @param time time in standard format (HH:MM): 20:21
@@ -90,12 +92,13 @@ datetime <- function(date, time) {
 #'
 #' @param fromStation the station to start from, for instance "Rotterdam Centraal"
 #' @param toStation the station to end, for instance "Utrecht Centraal"
-#' @param dateTime defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the `datetime()` function
+#' @param dateTime defaults to current time, but you can use a different one: f.i. 2012-02-21T15:50, You can also use the `datetime()` function.
 #' @param departure is the datetime the start or end time? do you want to depart on that date or arrive, defaults to departure
 #' @param yearCard if you have a NS year card (jaarabonnement) some trips will be different
 #' @param hslAllowed use of the high speed train
 #' @param previousAdvises how many advices do you want before the time
 #' @param nextAdvises how many advises do you want after
+#' @return A dataframe with travel advises around your chosen date time. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 #' @export
 #' @examples
 #' \dontrun{
@@ -154,8 +157,9 @@ get_stationlist <- function() {
 #' departure times for the next hour.
 #' \url{https://www.ns.nl/en/travel-information/ns-api/documentation-up-to-date-departure-times.html}.
 #' @param station station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN
-#' @return a dataframe
+#' @return a dataframe with date time formatted as time in "Europe/Amsterdam" timezone.
 #' @export
+#' @return a dataframe with departure times at this moment on the station you chose. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 #' @examples
 #' \dontrun{
 #' get_departures("UT")
@@ -213,7 +217,7 @@ disruptions_and_maintenance <- function(station = NULL, actual = NULL, unplanned
 #'
 #' \url{https://www.ns.nl/en/travel-information/ns-api/documentation-disruptions-and-maintenance-work.html}
 #' @param station  optional, station names need to be in Dutch and the NS webservice also accepts short versions:f.i. Groningen or GN
-#' @return a dataframe
+#' @return a dataframe with disruptions. Date time columns are formatted as time in "Europe/Amsterdam" timezone.
 #' @export
 get_disruptions_station <- function(station){
   disruptions_and_maintenance(station= station)
