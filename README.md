@@ -12,6 +12,7 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build
 Status](https://travis-ci.org/RMHogervorst/nsapi.svg?branch=master)](https://travis-ci.org/RMHogervorst/nsapi)
+[![codecov](https://codecov.io/gh/RMHogervorst/nsapi/branch/master/graph/badge.svg)](https://codecov.io/gh/RMHogervorst/nsapi)
 
 The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an
 API where we can query for travel advise, see the current trains on a
@@ -59,29 +60,25 @@ treinplanner <- get_travel_advise(
   nextAdvises = 1)
 treinplanner
 #>   Melding AantalOverstappen GeplandeReisTijd ActueleReisTijd
-#> 1      NA                 0             0:42            0:42
-#> 2      NA                 1             1:00            1:00
-#> 3      NA                 0             0:42            0:42
-#> 4      NA                 1             1:00            1:00
-#> 5      NA                 0             0:42            0:42
+#> 1      NA                 1             0:55            0:58
+#> 2      NA                 0             0:42            0:42
+#> 3      NA                 1             1:00            1:00
+#> 4      NA                 0             0:42            0:42
 #>   VertrekVertraging AankomstVertraging Optimaal GeplandeVertrekTijd
-#> 1              <NA>               <NA>    FALSE 2018-08-10 20:22:00
-#> 2              <NA>               <NA>     TRUE 2018-08-10 20:30:00
-#> 3              <NA>               <NA>    FALSE 2018-08-10 20:52:00
-#> 4              <NA>               <NA>    FALSE 2018-08-10 21:00:00
-#> 5              <NA>               <NA>    FALSE 2018-08-10 21:22:00
+#> 1              <NA>             +3 min    FALSE 2018-08-10 21:05:00
+#> 2              <NA>               <NA>     TRUE 2018-08-10 21:22:00
+#> 3              <NA>               <NA>    FALSE 2018-08-10 21:30:00
+#> 4              <NA>               <NA>    FALSE 2018-08-10 21:52:00
 #>    ActueleVertrekTijd GeplandeAankomstTijd ActueleAankomstTijd
-#> 1 2018-08-10 20:22:00  2018-08-10 21:04:00 2018-08-10 21:04:00
-#> 2 2018-08-10 20:30:00  2018-08-10 21:30:00 2018-08-10 21:30:00
-#> 3 2018-08-10 20:52:00  2018-08-10 21:34:00 2018-08-10 21:34:00
-#> 4 2018-08-10 21:00:00  2018-08-10 22:00:00 2018-08-10 22:00:00
-#> 5 2018-08-10 21:22:00  2018-08-10 22:04:00 2018-08-10 22:04:00
+#> 1 2018-08-10 21:05:00  2018-08-10 22:00:00 2018-08-10 22:03:00
+#> 2 2018-08-10 21:22:00  2018-08-10 22:04:00 2018-08-10 22:04:00
+#> 3 2018-08-10 21:30:00  2018-08-10 22:30:00 2018-08-10 22:30:00
+#> 4 2018-08-10 21:52:00  2018-08-10 22:34:00 2018-08-10 22:34:00
 #>         Status     ReisDeel
-#> 1 VOLGENS-PLAN NS, Inte....
-#> 2 VOLGENS-PLAN c("NS", ....
-#> 3 VOLGENS-PLAN NS, Inte....
-#> 4 VOLGENS-PLAN c("NS", ....
-#> 5 VOLGENS-PLAN NS, Inte....
+#> 1    VERTRAAGD c("NS", ....
+#> 2 VOLGENS-PLAN NS, Inte....
+#> 3 VOLGENS-PLAN c("NS", ....
+#> 4 VOLGENS-PLAN NS, Inte....
 ```
 
 # FAQ

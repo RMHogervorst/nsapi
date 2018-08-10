@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![thanks-md](https://img.shields.io/badge/THANKS-md-ff69b4.svg)](THANKS.md)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![Travis-CI Build Status](https://travis-ci.org/RMHogervorst/nsapi.svg?branch=master)](https://travis-ci.org/RMHogervorst/nsapi)
+[![Travis-CI Build Status](https://travis-ci.org/RMHogervorst/nsapi.svg?branch=master)](https://travis-ci.org/RMHogervorst/nsapi) [![codecov](https://codecov.io/gh/RMHogervorst/nsapi/branch/master/graph/badge.svg)](https://codecov.io/gh/RMHogervorst/nsapi)
 
 The Dutch National Railway service (NS; Nederlandse Spoorwegen) has an API where we can
 query for travel advise, see the current trains on a given station, see if there is any delays or work on the tracks and NS also provides a list with geolocation of all the stations. 
