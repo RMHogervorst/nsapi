@@ -1,7 +1,7 @@
 # nsapi 0.1.0
 
 * renamed all functions to start with get_*
-
+* Time is now safely parsed as "Europe/Amsterdam" timezone
 
 # nsapi 0.0.0.9000
 

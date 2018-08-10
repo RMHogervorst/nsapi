@@ -70,7 +70,8 @@ treinplanner
 
 2. I'm getting a curl timeout!
 
-- Yes... That happens, a lot. The NS website does not return errors but just times you out once in a while. Take a deep breath, retry. 
+- Yes... That happens, sometimes. The NS website does not always return errors 
+but just times you out once in a while. Take a deep breath, retry. 
 
 3. Error Bad request or HTTP 400 
 
