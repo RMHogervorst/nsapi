@@ -1,3 +1,7 @@
+# nsapi 0.1.0.9000
+* dev versions
+
+
 # nsapi 0.1.0
 
 * renamed all functions to start with get_*
