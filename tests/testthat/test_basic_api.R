@@ -46,6 +46,7 @@ test_that("travel_advise returns proper values", {
   skip_on_cran()
   advise_today <- get_travel_advise(fromStation = "Amsterdam Centraal", toStation = "Rotterdam Centraal", departure = TRUE, yearCard = TRUE, previousAdvises = 1, nextAdvises = 1)
   expect_true(is.data.frame(advise_today))
+  # check if this is working
 })
 
 

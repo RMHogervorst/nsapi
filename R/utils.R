@@ -37,6 +37,7 @@ parse_reismogelijkheden <- function(reizen) {
   )
   # fill the frame
   for (i in seq_len(l_df)) {
+    print(paste0("seq_len = ", i))
     holdingframe$Melding[[i]] <- null_to_na(reizen[[i]]$Melding[[1]])
     holdingframe$AantalOverstappen[[i]] <- as.integer(reizen[[i]]$AantalOverstappen[[1]])
     holdingframe$GeplandeReisTijd[[i]] <- reizen[[i]]$GeplandeReisTijd[[1]]
@@ -69,6 +70,7 @@ find_reisdelen <- function(reisdeel) {
   )
 
   for (i in seq_along(ids_reisdeel)) { # stupid double loop
+    print("reisdeel: ", i)
     index <- ids_reisdeel[[i]]
     # put the top element in
     reisdelen$Vervoerder[[i]] <- reisdeel[[index]]$Vervoerder[[1]]
@@ -89,6 +91,7 @@ find_reisdelen <- function(reisdeel) {
 
     for (index_ritten in seq_along(ids_ritten)) {
       j <- ids_ritten[[index_ritten]]
+      print(paste0("innerloop ritten ", j))
       rittenframe$Naam[[index_ritten]] <- reisdeel[[index]][[j]]$Naam[[1]]
       rittenframe$Tijd[[index_ritten]] <- parse_time(reisdeel[[index]][[j]]$Tijd[[1]])
       rittenframe$Spoor[[index_ritten]] <- null_to_na(reisdeel[[index]][[j]]$Spoor[[1]])
